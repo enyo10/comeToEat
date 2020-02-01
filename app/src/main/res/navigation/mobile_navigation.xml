@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/recipesFragment">
+
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesFragment"
+        android:label="@string/title_recipe_list"
+        tools:layout="@layout/fragment_recipes" >
+        <action
+            android:id="@+id/action_recipesFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectionFragment"
+        android:name="ch.enyo.openclassrooms.comeToEat.ui.selections.SelectionFragment"
+        android:label="@string/title_selected_recipe"
+        tools:layout="@layout/fragment_selection" />
+
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="ch.enyo.openclassrooms.comeToEat.ui.friends.FriendsFragment"
+        android:label="@string/title_user_list"
+        tools:layout="@layout/fragment_friends" />
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ch.enyo.openclassrooms.comeToEat.auth.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="ch.enyo.openclassrooms.comeToEat.ui.RecipeDetailFragment"
+        android:label="fragment_recipe_detail"
+        tools:layout="@layout/fragment_recipe_detail" />
+</navigation>

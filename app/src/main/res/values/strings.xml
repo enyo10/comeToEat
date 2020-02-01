@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Come to EAT</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_unknown_error">Une erreur est survenue</string>
+    <string name="connection_succeed">Connection succeed</string>
+    <string name="error_authentication_canceled">Connection cancel</string>
+    <string name="error_no_internet">no internet</string>
+    <string name="logout">logout</string>
+    <string name="login">Login</string>
+    <string name="title_recipe_list">Recipes</string>
+    <string name="title_selected_recipe">Selected </string>
+    <string name="title_user_list">Friends</string>
+    <string name="recipe_image">Recipe image</string>
+    <string name="recipe_name">Recipe name</string>
+    <string name="recipe">Recipe</string>
+    <string name="diet_label">Diet label</string>
+    <string name="health_label">Health label</string>
+    <string name="submit">Send</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_activity_coordinator_layout"
+        tools:context=".auth.LoginFragment">
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/default_large_margin"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!-- BUTTON LOGIN -->
+
+                <Button
+                    android:id="@+id/button_login"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    android:layout_marginBottom="80dp"
+                    android:background="@drawable/button_radius_primary_color"
+                    android:padding="@dimen/default_large_margin"
+                    android:text="@string/login"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

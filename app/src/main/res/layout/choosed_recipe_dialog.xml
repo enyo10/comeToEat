@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/search_date_picker_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<com.google.android.material.textview.MaterialTextView
+
+        android:id="@+id/search_begin_period_button"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+
+        android:gravity="center"
+        android:layout_marginEnd="5dp"
+
+        android:padding="5dp" />-->
+
+    <!--
+            <com.google.android.material.textview.MaterialTextView
+
+                android:id="@+id/search_end_period_button"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight=".5"
+                android:drawableStart="@drawable/ic_date_range"
+                android:gravity="center"
+                android:hint="@string/search_end_period"
+
+                android:background="@drawable/custom_text_view"
+                android:layout_marginStart="5dp"
+                android:padding="5dp"
+                android:textColor="@color/black" />-->
+
+
+</LinearLayout>
+
+
+

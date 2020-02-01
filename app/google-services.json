@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "262175516556",
+    "firebase_url": "https://cometoeat-5a561.firebaseio.com",
+    "project_id": "cometoeat-5a561",
+    "storage_bucket": "cometoeat-5a561.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262175516556:android:22f3edc50888af943818a9",
+        "android_client_info": {
+          "package_name": "ch.enyo.openclassrooms.comeToEat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262175516556-g4ntnsn7cs2ftat7cgok1s67s9du11u9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDERJaJJd0KytE78I7zH4gG_zyK9IBx6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262175516556-g4ntnsn7cs2ftat7cgok1s67s9du11u9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
