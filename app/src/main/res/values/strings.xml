@@ -1,24 +1,35 @@
 <resources>
     <string name="app_name">Come to EAT</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_unknown_error">Une erreur est survenue</string>
-    <string name="connection_succeed">Connection succeed</string>
-    <string name="error_authentication_canceled">Connection cancel</string>
-    <string name="error_no_internet">no internet</string>
     <string name="logout">logout</string>
     <string name="login">Login</string>
     <string name="title_recipe_list">Recipes</string>
     <string name="title_selected_recipe">Selected </string>
     <string name="title_user_list">Friends</string>
     <string name="recipe_image">Recipe image</string>
-    <string name="recipe_name">Recipe name</string>
     <string name="recipe">Recipe</string>
     <string name="diet_label">Diet label</string>
     <string name="health_label">Health label</string>
     <string name="submit">Send</string>
+    <string name="invitation_date">Invitation date</string>
+    <string name="ok">OK</string>
+    <string name="no">NO</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Notification String-->
+    <string name="channel_id" translatable="false">ch.enyo.openclassrooms.comeToEat-channel</string>
+    <string name="channel_name" translatable="false">comeToEat</string>
+    <string name="max_ingredient">Max nbr of ingredient</string>
+    <string name="cuisine_type">Type of cuisine</string>
+    <string name="meal_type">Type of meal</string>
+    <string name="dish_type">Type of dish</string>
+    <string name="search">Search</string>
+    <string name="search_basis">Search Basis</string>
+    <string name="exclude">Ingredient to exclude</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="cancel_button">Cancel</string>
+    <string name="search_button">Search</string>
 </resources>

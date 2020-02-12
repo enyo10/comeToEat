@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_recipesFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
+        <action
+            android:id="@+id/action_recipesFragment_to_searchDialog"
+            app:destination="@id/searchDialog" />
     </fragment>
 
     <fragment
@@ -38,4 +41,8 @@
         android:name="ch.enyo.openclassrooms.comeToEat.ui.RecipeDetailFragment"
         android:label="fragment_recipe_detail"
         tools:layout="@layout/fragment_recipe_detail" />
+    <dialog
+        android:id="@+id/searchDialog"
+        android:name="ch.enyo.openclassrooms.comeToEat.ui.search.SearchDialog"
+        android:label="SearchDialog" />
 </navigation>

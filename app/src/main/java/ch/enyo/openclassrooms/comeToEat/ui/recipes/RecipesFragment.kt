@@ -1,5 +1,6 @@
 package ch.enyo.openclassrooms.comeToEat.ui.recipes
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,12 +16,13 @@ import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.api.RecipeStream
 import ch.enyo.openclassrooms.comeToEat.auth.LoginViewModel
 import ch.enyo.openclassrooms.comeToEat.databinding.FragmentRecipesBinding
+import ch.enyo.openclassrooms.comeToEat.main.MainViewModel
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.Result
+import ch.enyo.openclassrooms.comeToEat.ui.search.SearchDialog
 import com.google.common.collect.ImmutableMap
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
-import kotlin.Result as Result1
 
 
 class RecipesFragment : Fragment() {
@@ -41,8 +42,9 @@ class RecipesFragment : Fragment() {
     // Get a reference to the ViewModel scoped to this Fragment
    // private val viewModel by viewModels<LoginViewModel>()
     private val viewModel by activityViewModels<LoginViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
- //  private val recipesViewModel = ViewModelProvider(this).get(RecipesViewModel::class.java)
+  //  private val recipesViewModel = ViewModelProvider(this).get(RecipesViewModel::class.java)
      val recipesViewModel by activityViewModels<RecipesViewModel>()
 
 
@@ -50,8 +52,14 @@ class RecipesFragment : Fragment() {
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.fragment_recipes,container,false)
 
         observeAuthenticationState()
+
         initRecyclerView()
-        loadRecipeData()
+
+        binding.searchButton.setOnClickListener {
+            // body.text=dateString
+            initAndShowSearchDialog()
+        }
+
 
 
        /* val textView: TextView = root.findViewById(R.id.text_home)
@@ -60,6 +68,14 @@ class RecipesFragment : Fragment() {
             textView.text = it
        })*/
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        mainViewModel.queryMap.observe(viewLifecycleOwner,Observer{
+            map:Map<String,String> -> loadRecipeData(map)
+        })
     }
 
     private fun initRecyclerView(){
@@ -74,11 +90,10 @@ class RecipesFragment : Fragment() {
 
     }
 
-    private fun navagateToSelectedRecipeFragment(){
-
-    }
 
     private fun updateUIWithResult(result: Result){
+
+
         Log.d(TAG, " Update UI method call ")
         val recipes :ArrayList<Recipe> =ArrayList()
         val index: Int=result.to-1
@@ -127,11 +142,12 @@ class RecipesFragment : Fragment() {
         findNavController().navigate(R.id.recipeDetailFragment)
     }
 
-   private fun loadRecipeData(){
 
-       "https://api.edamam.com/search?" +"q=chicken" + "&app_id=def9003a" + "&app_key=5afe494e2a6ed914cb7f64154b6e0203" + "&from=0" + "&to=20"
+   private fun loadRecipeData(map:Map<String,String>){
 
-       val map: Map<String, String> = ImmutableMap.of("q","chicken","app_id", "def9003a","app_key","5afe494e2a6ed914cb7f64154b6e0203")
+       "https://api.edamam.com/search?" +"q=meal" + "&app_id=def9003a" + "&app_key=5afe494e2a6ed914cb7f64154b6e0203" + "&from=0" + "&to=20"
+
+      // val map: Map<String, String> = ImmutableMap.of("q","meal","app_id", "def9003a","app_key","5afe494e2a6ed914cb7f64154b6e0203")
 
         myCompositeDisposable = RecipeStream.getRecipeResult(map)
 
@@ -158,6 +174,18 @@ class RecipesFragment : Fragment() {
                     )
                 }
             })
+
+    }
+
+    /**
+     * This method to init and show search dialog fragment.
+     */
+    private fun initAndShowSearchDialog(){
+        val fm =childFragmentManager
+       // val searchDialogFragment =SearchDialog()
+      //  searchDialogFragment.show(fm,"Search dialog")
+        val mySearchDialogB=SearchDialog()
+        mySearchDialogB.show(fm,"My Search dialogB")
 
     }
 

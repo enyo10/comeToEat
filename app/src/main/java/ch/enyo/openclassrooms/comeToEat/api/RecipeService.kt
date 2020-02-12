@@ -1,4 +1,5 @@
 package ch.enyo.openclassrooms.comeToEat.api
+import ch.enyo.openclassrooms.comeToEat.BuildConfig
 import ch.enyo.openclassrooms.comeToEat.models.Result
 
 
@@ -37,7 +38,7 @@ interface RecipeService {
     fun getRecipes(@QueryMap filters: Map<String, String>): Observable<Result>
 
 
-    @GET("search?q=chicken&app_id=def9003a&app_key=5afe494e2a6ed914cb7f64154b6e0203")
+    @GET("search?q=chicken&app_id=def9003a&app_key="+BuildConfig.api_key)
     fun getRecipesResult():Observable<Result>
 
 

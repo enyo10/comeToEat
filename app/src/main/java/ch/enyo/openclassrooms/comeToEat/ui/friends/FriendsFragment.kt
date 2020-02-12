@@ -3,10 +3,9 @@ import ch.enyo.openclassrooms.comeToEat.models.Result
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ch.enyo.openclassrooms.comeToEat.R
@@ -29,7 +28,7 @@ class FriendsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        loadData()
+
         notificationsViewModel =
             ViewModelProvider(this).get(FriendsViewModel::class.java)
 
@@ -39,6 +38,7 @@ class FriendsFragment : BaseFragment() {
             textView.text = it
         })
         observeAuthenticationState()
+
         return root
     }
 
@@ -46,33 +46,10 @@ class FriendsFragment : BaseFragment() {
         return R.layout.fragment_friends
     }
 
-    private fun loadData(){
-        var disposable : Disposable =
-            RecipeStream.getSecond().subscribeWith(object : DisposableObserver<Result>() {
-                override fun onNext(result: Result) {
-                    Log.i(TAG, " Recipe list 2 downloading...")
-                    Log.i(TAG, " Recipe list 2 size: " +result.to)
-                    Log.i(TAG, " from"+result.from)
-                    Log.i(TAG,"hits "+result.hits)
-                    Log.i(TAG,"result to string $result")
-
-                    // updateUIWithResult(placeDetailsList)
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.i("TAG", "aie, error in recipe search: " + Log.getStackTraceString(e)
-                    )
-                }
-
-                override fun onComplete() {
-                    Log.i(
-                        RecipesFragment.TAG,
-                        " Recipes  downloaded "
-                    )
-                }
-            })
-
-
-
+    fun loadUsers(){
+        
     }
+
+
+
 }

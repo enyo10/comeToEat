@@ -9,21 +9,32 @@ apply plugin: 'io.fabric'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 
+def apiKeyPropertiesFile = rootProject.file("apiKey.properties")
+def apiKeyProperties = new Properties()
+apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
+
+
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
 
     dataBinding {
-        enabled = true
+        enabled true
     }
     defaultConfig {
         applicationId "ch.enyo.openclassrooms.comeToEat"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 29
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
+        // should correspond to key/value pairs inside the file
+        buildConfigField("String", "SERVER_KEY", apiKeyProperties['SERVER_KEY'])
+        buildConfigField("String", "api_key", apiKeyProperties['api_key'])
+        // buildConfigField("String", "CONSUMER_SECRET", apikeyProperties['CONSUMER_SECRET'])
     }
     buildTypes {
         release {
@@ -42,17 +53,22 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // api 'com.google.android.material:material:1.2.0-alpha04'
+    //  api'com.google.android.material:material:1.2.0-alpha03'
+    api 'com.google.android.material:material:1.2.0-alpha02'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.android.volley:volley:1.1.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'androidx.navigation:navigation-fragment:2.2.0'
-    implementation 'androidx.navigation:navigation-ui:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation 'androidx.navigation:navigation-ui:2.2.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
 
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
@@ -92,6 +108,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-firestore:5.0.0'
     // FirebaseUI Storage
     implementation 'com.firebaseui:firebase-ui-storage:5.0.0'
+
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.android.volley:volley:1.1.1'
 
     implementation 'com.android.support:multidex:1.0.3'
 

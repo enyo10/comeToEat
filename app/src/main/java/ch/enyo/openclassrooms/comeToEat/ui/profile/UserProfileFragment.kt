@@ -38,13 +38,6 @@ class UserProfileFragment : Fragment() {
         return inflater.inflate(R.layout.user_profile_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-       // viewModel = ViewModelProviders.of(this).get(UserProfileViewModel::class.java)
-
-        // TODO: Use the ViewModel
-    }
-
     private fun loadData(){
         var disposable :Disposable=RecipeStream.getSecond().subscribeWith(object : DisposableObserver<Result>() {
             override fun onNext(result: Result) {

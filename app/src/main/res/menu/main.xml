@@ -7,6 +7,12 @@
             android:title="@string/action_settings"
             app:showAsAction="never" />-->
 
+  <!--  <item android:id="@+id/action_recipesFragment_to_searchDialog"
+        android:orderInCategory="100"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="always"/>-->
+
     <item android:id="@+id/action_logout"
         android:orderInCategory="100"
         android:title="@string/logout"

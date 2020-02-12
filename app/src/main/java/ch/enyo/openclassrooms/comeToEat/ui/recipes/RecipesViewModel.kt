@@ -25,4 +25,15 @@ class RecipesViewModel : ViewModel() {
     }
 
 
+
+    val searchBasis: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+
+
+    val maxIngredient: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+
+
 }
