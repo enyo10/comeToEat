@@ -9,12 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import ch.enyo.openclassrooms.comeToEat.BuildConfig
 
-import ch.enyo.openclassrooms.comeToEat.main.MainActivity
+
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.databinding.SearchDialogFragmentBinding
-import ch.enyo.openclassrooms.comeToEat.main.MainViewModel
+import ch.enyo.openclassrooms.comeToEat.ui.main.MainViewModel
+import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesViewModel
 import ch.enyo.openclassrooms.comeToEat.utils.Converter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,9 +31,9 @@ class SearchDialog : DialogFragment() {
 
     private lateinit var searchViewModel: SearchDialogViewModel
     private lateinit var binding:SearchDialogFragmentBinding
-   // private val searchViewModel by activityViewModels<RecipesViewModel>()
-   private val mainViewModel by activityViewModels<MainViewModel>()
+
     private val shareViewModel: MainViewModel by activityViewModels()
+    private val recipesViewModel: RecipesViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
        // return super.onCreateDialog(savedInstanceState)
@@ -42,7 +42,6 @@ class SearchDialog : DialogFragment() {
 
         val materialBuilder = MaterialAlertDialogBuilder(requireContext())
         materialBuilder.setView(binding.root)
-
 
         return materialBuilder.create()
 
@@ -64,11 +63,11 @@ class SearchDialog : DialogFragment() {
 
             var noErrors = true
 
-            var q :String? = searchViewModel.searchBasis.value
-            var meal: String? = searchViewModel.mealType.value
-            var cuisineType: String? = searchViewModel.cuisineType.value
-            var dishType :String? =searchViewModel.dishType.value
-            var ing :Int? =searchViewModel.maxIngredient.value
+            val q :String? = searchViewModel.searchBasis.value
+            val meal: String? = searchViewModel.mealType.value
+            val cuisineType: String? = searchViewModel.cuisineType.value
+            val dishType :String? =searchViewModel.dishType.value
+            val ing :Int? =searchViewModel.maxIngredient.value
 
 
 
@@ -83,35 +82,20 @@ class SearchDialog : DialogFragment() {
             if(noErrors){
                 val myQueryMap: MutableMap<String,String> = mutableMapOf()
                 myQueryMap["q"]=q
-                myQueryMap["app_id"]= "def9003a"
-                myQueryMap["app_key"]=BuildConfig.api_key
 
-                if(meal!=null)myQueryMap["meal"]=meal
-                if(cuisineType!=null)myQueryMap["cuisineType"]=cuisineType
-                if(dishType!=null) myQueryMap["dishType"] = dishType
+                if(meal!=null)myQueryMap["meal"] = meal
+                if(cuisineType!=null)myQueryMap["cuisineTyp"]= cuisineType
+                if(dishType!=null) myQueryMap["dishTyp"] = dishType
                 if(ing!=0)myQueryMap["ing"]=ing.toString()
 
-                shareViewModel.queryMap.value=myQueryMap
+                Log.d(TAG, " query map ...$myQueryMap")
 
-
-                // ("q",q,"app_id", "def9003a","app_key",BuildConfig.api_key)
-
-              //  val mutableMap1: Map<String, String> = mutableMapOf<String, String>()
-
-              //  if(meal!=null) queryMap.
+                shareViewModel.setRecipeQueryMap(myQueryMap)
+               // recipesViewModel.setRecipeQueryMap(myQueryMap)
 
             }
 
 
-          //  val map: Map<String, String> = ImmutableMap.of("q","meal","app_id", "def9003a","app_key","5afe494e2a6ed914cb7f64154b6e0203")
-
-
-
-
-            val mainActivity =activity as MainActivity
-
-
-            mainActivity.loadRecipeData()
             dismiss()
         }
 

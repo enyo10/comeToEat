@@ -1,13 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.profile.UserProfileFragment">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <data>
+        <variable
+            name="user"
+            type="ch.enyo.openclassrooms.comeToEat.models.User" />
+        <variable
+            name="userProfileViewModel"
+            type="ch.enyo.openclassrooms.comeToEat.ui.profile.UserProfileViewModel" />
 
-</FrameLayout>
+
+    </data>
+
+ <androidx.core.widget.NestedScrollView
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+
+
+        <!-- USER DATA CONTAINER -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+                <!-- PROFILE IMAGE -->
+            <LinearLayout
+                android:id="@+id/image_view_profile_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/image_view_profile"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:contentDescription="@string/user_profile_image"
+                    app:srcCompat="@drawable/ic_anon_user_48dp" />
+
+                <!-- PROFILE USERNAME -->
+
+                <com.google.android.material.textfield.TextInputEditText
+
+                    android:id="@+id/profile_edit_text_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/default_margin"
+                    android:layout_marginBottom="30dp"
+                    android:text="@={userProfileViewModel.connectedUser.username}"
+                    android:hint="@string/text_input_username"
+                    android:textSize="@dimen/default_text_size"
+                    />
+
+                <TextView
+                    android:id="@+id/profile_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{userProfileViewModel.connectedUser.username}"
+                    android:hint="@string/user_name"
+                    android:textSize="@dimen/default_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/profile_user_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="@string/text_view_email"
+                    android:textSize="@dimen/default_text_size"
+                    android:textStyle="bold" />
+
+
+                <!-- PROGRESS BAR -->
+                <ProgressBar
+
+                    android:id="@+id/profile_progress_bar"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:visibility="invisible"
+                    android:layout_margin="@dimen/default_large_margin"/>
+
+                <LinearLayout
+                    android:layout_width="411dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+
+                        android:id="@+id/profile_button_update"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_margin"
+                        android:background="@drawable/button_radius_primary_color"
+                        android:padding="@dimen/default_margin"
+                        android:text="@string/button_update_account"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <Button
+
+                        android:id="@+id/profile_button_sign_out"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_margin"
+                        android:padding="@dimen/default_margin"
+                        android:text="@string/button_sign_out_account"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/default_text_size" />
+
+
+                    <!-- BUTTON DELETE ACCOUNT -->
+
+                    <Button
+
+                        android:id="@+id/profile_button_delete"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_margin"
+                        android:layout_marginBottom="10dp"
+                        android:padding="@dimen/default_margin"
+                        android:text="@string/button_delete_account"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/default_text_size" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+ </androidx.core.widget.NestedScrollView>
+</layout>

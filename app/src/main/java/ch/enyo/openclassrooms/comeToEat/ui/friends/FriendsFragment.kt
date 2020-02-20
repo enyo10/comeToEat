@@ -1,27 +1,30 @@
 package ch.enyo.openclassrooms.comeToEat.ui.friends
-import ch.enyo.openclassrooms.comeToEat.models.Result
 
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import android.widget.TextView
-import androidx.core.app.ActivityCompat.invalidateOptionsMenu
-import androidx.lifecycle.Observer
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ch.enyo.openclassrooms.comeToEat.R
-import ch.enyo.openclassrooms.comeToEat.api.RecipeStream
 import ch.enyo.openclassrooms.comeToEat.base.BaseFragment
-import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesFragment
-import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DisposableObserver
+import ch.enyo.openclassrooms.comeToEat.databinding.FragmentFriendsBinding
+import ch.enyo.openclassrooms.comeToEat.models.User
+import ch.enyo.openclassrooms.comeToEat.utils.getAllUsers
+
 
 class FriendsFragment : BaseFragment() {
 
-    companion object{
-        const val TAG="FriendsFragment"
+    companion object {
+        const val TAG = "FriendsFragment"
     }
 
+    private lateinit var binding: FragmentFriendsBinding
     private lateinit var notificationsViewModel: FriendsViewModel
+    private lateinit var friendsAdapter: FriendsAdapter
+    private var users: ArrayList<User> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,24 +35,60 @@ class FriendsFragment : BaseFragment() {
         notificationsViewModel =
             ViewModelProvider(this).get(FriendsViewModel::class.java)
 
-        val root = inflater.inflate(getFragmentLayout(), container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
-        observeAuthenticationState()
 
-        return root
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.fragment_friends,
+            container,
+            false
+        )
+        // val textView: TextView = root.findViewById(R.id.text_notifications)
+        // notificationsViewModel.text.observe(this, Observer {
+        //     textView.text = it
+        //  })
+        observeAuthenticationState()
+        initRecyclerView()
+        loadUsers()
+        binding.swipeRefresh.setOnRefreshListener{
+            loadUsers()
+        }
+
+        return binding.root
     }
 
     override fun getFragmentLayout(): Int {
         return R.layout.fragment_friends
     }
 
-    fun loadUsers(){
-        
+    private fun initRecyclerView() {
+        val recyclerView: RecyclerView = binding.recyclerView
+        val linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerView.layoutManager = linearLayoutManager
+
+        friendsAdapter = FriendsAdapter(this, users)
+
+        recyclerView.adapter = friendsAdapter
+
     }
 
 
+    private fun loadUsers() {
+        getAllUsers().addOnSuccessListener { result ->
+            run {
+                updateUI(result.toObjects(User::class.java) as ArrayList<User>)
+            }
+        }
+
+
+    }
+
+    private fun updateUI(list: ArrayList<User>) {
+        binding.swipeRefresh.isRefreshing=false
+        users.clear()
+        users.addAll(list)
+        friendsAdapter.notifyDataSetChanged()
+
+    }
 
 }

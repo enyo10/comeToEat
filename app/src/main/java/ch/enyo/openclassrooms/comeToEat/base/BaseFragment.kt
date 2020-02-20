@@ -6,22 +6,32 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.auth.LoginViewModel
 import ch.enyo.openclassrooms.comeToEat.models.User
+import ch.enyo.openclassrooms.comeToEat.ui.profile.UserProfileFragment
 import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesFragment
+import ch.enyo.openclassrooms.comeToEat.utils.getUser
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 
 /**
  * A simple [Fragment] subclass.
  */
  abstract class BaseFragment : Fragment() {
-    private val viewModel by viewModels<LoginViewModel>()
-    protected lateinit var user: User
+    companion object{
+        const val TAG :String ="BaseFragment"
+    }
+    val viewModel by activityViewModels<LoginViewModel>()
+    protected lateinit var authenticatedUser: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,25 +55,41 @@ import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesFragment
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    Log.i(RecipesFragment.TAG,"Authentication success")
+                    Log.i(TAG,"Authentication success")
+                   getConnectedFromFireBase()
 
 
-
-                    /* binding.authButton.setOnClickListener {
-                         AuthUI.getInstance().signOut(requireContext())
-                     }*/
                 }
                 else -> {
                     Log.i(RecipesFragment.TAG, "User not AUTHENTICATED")
                     findNavController().navigate(R.id.loginFragment)
 
-                    /* binding.authButton.setOnClickListener {
-                         launchSignInFlow()
-                     }*/
                 }
             }
         })
     }
 
+    private fun getCurrentUser(): FirebaseUser? {
+        return FirebaseAuth.getInstance().currentUser
+    }
+
+    protected fun getConnectedFromFireBase(){
+        onFailureListener()?.let {
+            getUser(getCurrentUser()!!.uid)!!.addOnFailureListener(it)
+                .addOnSuccessListener {
+                    documentSnapshot -> run { authenticatedUser = documentSnapshot!!.toObject(User::class.java) as User }
+
+                Log.d(TAG, " Connected User $authenticatedUser")
+            }
+        }
+
+    }
+
+    protected fun onFailureListener(): OnFailureListener? {
+        return OnFailureListener { e: Exception? ->
+            Toast.makeText(context,getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show()
+            e?.printStackTrace()
+        }
+    }
 
 }

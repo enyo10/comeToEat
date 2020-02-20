@@ -1,4 +1,4 @@
-package ch.enyo.openclassrooms.comeToEat.ui
+package ch.enyo.openclassrooms.comeToEat.ui.recipes
 
 
 
@@ -13,26 +13,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.databinding.FragmentRecipeDetailBinding
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.User
-import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesViewModel
 import ch.enyo.openclassrooms.comeToEat.utils.getUser
 import ch.enyo.openclassrooms.comeToEat.utils.saveSelectedRecipe
-import com.google.android.material.textfield.TextInputEditText
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -44,14 +43,6 @@ class RecipeDetailFragment : Fragment() {
         const val TAG: String="RecipeDetailFragment"
     }
 
-   /* private val FCM_API = "https://fcm.googleapis.com/fcm/send"
-    private val serverKey =
-        "key=" + "Enter_your_server_key"
-    private val contentType = "application/json"
-    private val requestQueue: RequestQueue by lazy {
-        Volley.newRequestQueue()
-    }
-    */
 
     private lateinit var recipeDetailBinding: FragmentRecipeDetailBinding
 
@@ -60,7 +51,9 @@ class RecipeDetailFragment : Fragment() {
     private lateinit var mRecipe: Recipe
     private lateinit var mDatePicker: DatePickerDialog
     private lateinit var dateString: String
+    private lateinit var date :Date
     private lateinit var textView: MaterialTextView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,14 +62,20 @@ class RecipeDetailFragment : Fragment() {
         // Inflate the layout for this fragment
         recipeDetailBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.fragment_recipe_detail,container,false)
 
-       webView= recipeDetailBinding.webView
+       webView = recipeDetailBinding.webView
+        webView.settings.setSupportZoom(true)
 
+       // webView.webViewClient= WebViewClient()
         webView.webViewClient= WebViewClient()
 
+
         observeSelectedRecipe()
-        setInvitationDate()
+       // setInvitationDate()
         recipeDetailBinding.recipeDetailButton.setOnClickListener {
-            insertRecipeToFireBase()
+           // insertRecipeToFireBase()
+            showDialog("Choose date")
+            setInvitationDate()
+
 
         }
 
@@ -106,16 +105,16 @@ class RecipeDetailFragment : Fragment() {
 
     private fun insertRecipeToFireBase(){
         val userId= getUserId()
-        showDialog("Choose date")
 
         getUser(userId!!)?.addOnSuccessListener {
             documentSnapshot ->  val user: User?= documentSnapshot?.toObject(User::class.java)
             Log.d(TAG, " user : $user")
-            saveSelectedRecipe(user!!.userId!!,mRecipe)
-
-
+            saveSelectedRecipe(user!!.userId!!,mRecipe,date)!!.addOnSuccessListener(
+                OnSuccessListener {
+                    Toast.makeText(context," Recipe insertion succeeded",Toast.LENGTH_LONG).show()
+                    navigateToRecipeList()
+                })
         }
-
 
     }
 
@@ -134,7 +133,7 @@ class RecipeDetailFragment : Fragment() {
         val noBtn = dialog .findViewById(R.id.noBtn) as AppCompatButton
 
         yesBtn.setOnClickListener {
-           // body.text=dateString
+           insertRecipeToFireBase()
             dialog .dismiss()
         }
         noBtn.setOnClickListener { dialog .dismiss() }
@@ -145,7 +144,6 @@ class RecipeDetailFragment : Fragment() {
 
     private fun setInvitationDate(){
         // Create a DatePickerDialog and manage it
-        // Create a DatePickerDialog and manage it
 
         Log.i(TAG, " set invitation date call ")
        val newCalendar: Calendar= Calendar.getInstance()
@@ -154,17 +152,12 @@ class RecipeDetailFragment : Fragment() {
             OnDateSetListener { _, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 val newDate = Calendar.getInstance()
                 newDate[year, monthOfYear] = dayOfMonth
-              //  mRealEstateViewModel.beginPeriodDate.setValue(newDate.time)
-                // Display date selected
-              /*  mRealEstateSearchDialogBinding.searchBeginPeriodButton.setText(
-                    displayDateFormatter.format(
-                        newDate.time
-                    )
-                )*/
-               dateString= SimpleDateFormat("dd/MM/yyyy", Locale.US).format(newDate.time)
+
+
+               dateString = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(newDate.time)
+                date =newDate.time
                 Log.i(TAG, "date string --> $dateString")
                 textView.text=dateString
-
 
             },
             newCalendar.get(Calendar.YEAR),
@@ -177,16 +170,19 @@ class RecipeDetailFragment : Fragment() {
             DialogInterface.OnClickListener { _, which: Int ->
                 if (which == DialogInterface.BUTTON_NEGATIVE) {
                     dateString=""
-                    Log.i(
-                        TAG, " Date is cancel "
-                    )
-                   // mRealEstateViewModel.beginPeriodDate.setValue(null)
+                    Log.i(TAG, " Date is cancel ")
+                    Toast.makeText(context," Date is cancel",Toast.LENGTH_LONG).show()
 
 
                 }
             }
         )
     }
+
+    private fun navigateToRecipeList(){
+        findNavController().navigate(R.id.recipesFragment)
+    }
+
 
 
 }

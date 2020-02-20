@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="user"
+            type="ch.enyo.openclassrooms.comeToEat.models.User" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/item_workmates_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--WORKMATES PHOTO-->
+        <ImageView
+            android:id="@+id/fragment_workmates_list_item_image"
+            android:layout_width="72dp"
+            android:layout_height="79dp"
+            android:layout_margin="10dp"
+            android:contentDescription="@string/friends_profile"
+            android:src="@drawable/ic_participant"
+
+            />
+
+        <RelativeLayout
+            android:id="@+id/item_workmates_relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--WORKMATES CHOICE-->
+            <TextView
+                android:id="@+id/fragment_friends_list_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center_horizontal"
+                android:text="@string/friends_default_decision"
+                android:textColor="@android:color/darker_gray"
+                android:textStyle="italic" />
+
+            <!--SEPARATION-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/gray" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import ch.enyo.openclassrooms.comeToEat.BR
 import com.bumptech.glide.Glide
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.databinding.RecipeListItemBinding
@@ -95,14 +94,13 @@ class RecipesAdapter( val fragment: RecipesFragment,private var recipes:ArrayLis
         View.OnClickListener{
 
          var itemRowBinding :RecipeListItemBinding = binding
-       // var context: ViewModel?= context
 
         init {
             itemRowBinding.root.setOnClickListener(this)
         }
 
         fun bind(obj: Any?) {
-            itemRowBinding.setVariable(BR.recipe,obj)
+           itemRowBinding.setVariable(BR.recipe,obj)
 
             itemRowBinding.executePendingBindings()
         }
@@ -111,10 +109,11 @@ class RecipesAdapter( val fragment: RecipesFragment,private var recipes:ArrayLis
 
            Log.d(TAG, "on clicked ${itemRowBinding.recipe?.label}")
 
-            recipesFragment.recipesViewModel.setSelectedRecipe(itemRowBinding.recipe!!)
+           recipesFragment.recipesViewModel.setSelectedRecipe(itemRowBinding.recipe!!)
             recipesFragment.navigateToDetailsFragment()
 
         }
+
 
 
     }

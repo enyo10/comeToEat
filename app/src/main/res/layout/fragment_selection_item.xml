@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="selectedRecipe"
+            type="ch.enyo.openclassrooms.comeToEat.utils.SelectedRecipe" />
+    </data>
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="1dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardUseCompatPadding="true"
+        android:background="@color/iron">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_restaurant_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <!--RECIPE IMAGE -->
+    <ImageView
+        android:id="@+id/item_recipe_imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="3dp"
+        android:contentDescription="@string/selected_recipe_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_lunch" />
+
+    <!--RECIPE NAME-->
+    <TextView
+        android:id="@+id/item_recipe_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="3dp"
+        android:text="@string/recipe_name"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--RECIPE LABEL-->
+    <TextView
+        android:id="@+id/item_recipe_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/recipe_label"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_recipe_name" />
+
+
+    <!--RECIPE DATE-->
+    <TextView
+        android:id="@+id/item_recipe_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/invitation_date"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_recipe_label" />
+
+    <!--RESTAURANTS DISTANCE-->
+    <TextView
+        android:id="@+id/item_recipe_host"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="3dp"
+        android:text="@string/host"
+        app:layout_constraintEnd_toStartOf="@+id/item_recipe_imageView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/item_recipe_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--RECIPE PARTICIPANT NUMBER-->
+    <TextView
+        android:id="@+id/item_recipe_participants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/nb_of_participant"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/item_recipe_imageView"
+        app:layout_constraintTop_toBottomOf="@+id/item_recipe_host" />
+
+    <!--RECIPE PARTICIPANT IMAGE-->
+
+    <ImageView
+        android:id="@+id/item_recipe_participants_images"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:contentDescription="@string/participant_icon"
+        app:layout_constraintEnd_toStartOf="@+id/item_recipe_participants"
+        app:layout_constraintHorizontal_bias="0.992"
+        app:layout_constraintStart_toEndOf="@+id/item_recipe_label"
+        app:layout_constraintTop_toBottomOf="@+id/item_recipe_host"
+        app:srcCompat="@drawable/ic_participant" />
+
+
+    <!--SEPARATION-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/fui_buttonShadow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_recipe_imageView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

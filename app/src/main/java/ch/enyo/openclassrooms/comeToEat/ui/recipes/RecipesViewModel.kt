@@ -1,18 +1,29 @@
 package ch.enyo.openclassrooms.comeToEat.ui.recipes
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
+import ch.enyo.openclassrooms.comeToEat.repositories.RecipeRepository
 
 class RecipesViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    companion object{
+        const val TAG :String ="RecipesViewModel"
     }
-    val text: LiveData<String> = _text
 
-   private  val selectedRecipe:MutableLiveData<Recipe?> = MutableLiveData<Recipe?>()
+    private var recipes:MutableLiveData<ArrayList<Recipe>> = MutableLiveData<ArrayList<Recipe>>()
+
+
+
+    private var recipeRepository: RecipeRepository = RecipeRepository.getInstance()!!
+
+    fun getRecipes():MutableLiveData<ArrayList<Recipe>>{
+        return recipes
+    }
+
+
+    private  val selectedRecipe:MutableLiveData<Recipe?> = MutableLiveData()
 
     fun setSelectedRecipe(recipe: Recipe){
         selectedRecipe.value=recipe
@@ -25,15 +36,28 @@ class RecipesViewModel : ViewModel() {
     }
 
 
+    private var recipeQueryMap :MutableLiveData<MutableMap<String,String>> = MutableLiveData()
 
-    val searchBasis: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    fun setRecipeQueryMap(map: MutableMap<String,String>){
+        Log.d(TAG, " Query map set ---")
+        recipeQueryMap.value=map
+       recipes= recipeRepository.getRecipes(getRecipeQueryMap().value!!)
+
+
+    }
+    fun getRecipeQueryMap():MutableLiveData<MutableMap<String, String>>{
+        if(recipeQueryMap.value==null){
+            val map = mutableMapOf<String,String>()
+            map["q"]= "Fish"
+            recipeQueryMap.value=map
+        }
+
+        return recipeQueryMap
     }
 
 
-    val maxIngredient: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
+
+
 
 
 }

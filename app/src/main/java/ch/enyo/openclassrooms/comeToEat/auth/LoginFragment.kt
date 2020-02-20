@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -38,7 +39,8 @@ class LoginFragment : Fragment() {
     }
 
     // Get a reference to the ViewModel scoped to this Fragment.
-    private val viewModel by viewModels<LoginViewModel>()
+  //  private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel by activityViewModels<LoginViewModel>()
 
     private lateinit var navController: NavController
 
@@ -93,19 +95,6 @@ class LoginFragment : Fragment() {
             ).build(), RC_SIGN_IN
         )
 
-        /* startActivityForResult(
-             AuthUI.getInstance()
-                 .createSignInIntentBuilder()
-                 .setTheme(R.style.LoginTheme)
-                 .setAvailableProviders(
-                     providers
-                 )
-                 .setIsSmartLockEnabled(false, true) // .setLogo(R.drawable.logo_go_for_lunch144)
-                 .setTheme(R.style.LoginTheme)
-                 .build(),
-             RC_SIGN_IN
-         )*/
-
 
     }
 
@@ -115,7 +104,7 @@ class LoginFragment : Fragment() {
             val response = IdpResponse.fromResultIntent(data)
             if (resultCode == Activity.RESULT_OK) {
 
-                createUserInFirestore()
+                createUserInFireStore()
                 // User successfully signed in
                 Log.i(RecipesFragment.TAG, "Successfully signed in user ${FirebaseAuth.getInstance().currentUser?.displayName}!"
                 )
@@ -135,7 +124,7 @@ class LoginFragment : Fragment() {
     }
 
 
-    private fun createUserInFirestore(){
+    private fun createUserInFireStore(){
         val username=getCurrentUser()!!.displayName
         val email=getCurrentUser()!!.email
         val urlPicture=getCurrentUser()!!.photoUrl

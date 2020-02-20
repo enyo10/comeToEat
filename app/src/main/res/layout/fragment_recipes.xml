@@ -5,14 +5,33 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!-- PROGRESS BAR -->
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/recipes_swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
 
         <FrameLayout
             android:id="@+id/recipes_frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ProgressBar
+
+                android:id="@+id/recipes_progress_bar"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/default_large_margin"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recipes_recyclerView"
@@ -34,6 +53,6 @@
             </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
         </FrameLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
 </layout>
