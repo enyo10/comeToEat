@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import ch.enyo.openclassrooms.comeToEat.BR
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.databinding.FragmentSelectionItemBinding
-import ch.enyo.openclassrooms.comeToEat.models.Recipe
+import ch.enyo.openclassrooms.comeToEat.models.User
 import ch.enyo.openclassrooms.comeToEat.utils.SelectedRecipe
+import ch.enyo.openclassrooms.comeToEat.utils.getUser
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import java.text.SimpleDateFormat
@@ -44,16 +46,20 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
     override fun onBindViewHolder(holder:SelectionViewHolder, position: Int) {
         val selectedRecipe :SelectedRecipe = selections[position]
         holder.bind(selectedRecipe)
-       holder.itemRowBinding.itemRecipeName.text=selectedRecipe.recipeLabel
+        holder.itemRowBinding.itemRecipeName.text=selectedRecipe.recipeLabel
         @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
         holder.itemRowBinding.itemRecipeDate.text= SimpleDateFormat("dd/MM/yyyy", Locale.US).format(selectedRecipe.date)
         holder.itemRowBinding.itemRecipeParticipants.text=selectedRecipe.participants!!.size.toString()
+        holder.itemRowBinding.itemRecipeLabel.text=selectedRecipe.recipeLabel
+
+        holder.getRecipeOwner(selectedRecipe.participants[0])
 
        val imageView = holder.itemRowBinding.itemRecipeImageView
         selectedRecipe.image?.let { loadImage(imageView, it) }
 
 
     }
+
 
 
     private fun loadImage(v: ImageView, image:String){
@@ -68,6 +74,8 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
         selections=list
         notifyDataSetChanged()
     }
+
+
 
 
     class SelectionViewHolder( val selectionFragment: SelectionFragment, binding: FragmentSelectionItemBinding) : RecyclerView.ViewHolder(binding.root),
@@ -90,10 +98,22 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
         }
 
         override fun onClick(v: View?) {
-            Log.d( TAG, " on View clicked ....")
+
             selectionFragment.selectionViewModel.setSelectedSelectedRecipe(itemRowBinding.selectedRecipe!!)
             selectionFragment.navigateToSelectedRecipeDetailsFragment()
 
+        }
+
+
+        fun getRecipeOwner(userId:String){
+
+            getUser(userId).addOnSuccessListener {
+                    documentSnapshot ->  val user = documentSnapshot?.toObject(User::class.java)
+                itemRowBinding.itemRecipeHost.text=user!!.username
+
+                Log.d(TAG, " user : $user")
+
+            }
         }
  
 

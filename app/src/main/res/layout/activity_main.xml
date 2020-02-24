@@ -13,7 +13,7 @@
     >
 
     <include layout="@layout/app_bar_main" />
-    <!--<include layout="@layout/content_main"/>-->
+
 
    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

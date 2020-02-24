@@ -22,13 +22,14 @@
         <FrameLayout
             android:id="@+id/recipes_frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="48dp">
 
             <ProgressBar
 
                 android:id="@+id/recipes_progress_bar"
-                android:layout_width="50dip"
-                android:layout_height="50dip"
+                android:layout_width="100dip"
+                android:layout_height="100dip"
                 android:visibility="invisible"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/default_large_margin"/>

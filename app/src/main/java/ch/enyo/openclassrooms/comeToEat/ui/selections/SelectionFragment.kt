@@ -43,6 +43,7 @@ class SelectionFragment : BaseFragment() {
         initRecyclerView()
         loadData()
 
+
         return binding.root
     }
 
@@ -50,18 +51,17 @@ class SelectionFragment : BaseFragment() {
       return R.layout.fragment_selection
     }
 
-
-    private fun initRecyclerView(){
-        val linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding.selectionRecyclerView.layoutManager=linearLayoutManager
-
-        mSelectionAdapter  = SelectionAdapter(this,ArrayList())
-        binding.selectionRecyclerView.adapter=mSelectionAdapter
-
-        Log.i(TAG,"Recycler view init success in Selection fragment")
-
+    override fun loadData() {
+        getAllSelectedRecipe().addOnSuccessListener { result ->
+            run {
+                updateUI(result.toObjects(SelectedRecipe::class.java) as ArrayList<SelectedRecipe>) }
+            Log.d(TAG, " in load data")
+        }.addOnFailureListener { exception ->
+            Log.d(TAG, "Error getting documents: ", exception)
+        }
     }
+
+
 
     fun navigateToSelectedRecipeDetailsFragment(){
         findNavController().navigate(R.id.selectedRecipeDetail)
@@ -73,19 +73,18 @@ class SelectionFragment : BaseFragment() {
 
     }
 
-    private fun loadData(){
 
-        getAllSelectedRecipe().addOnSuccessListener { result ->
-            run {
-                updateUI(result.toObjects(SelectedRecipe::class.java) as ArrayList<SelectedRecipe>)
-            }
 
-            Log.d(TAG, " in load data")
+    override fun initRecyclerView() {
+        val linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding.selectionRecyclerView.layoutManager=linearLayoutManager
 
-        }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "Error getting documents: ", exception)
-            }
+        mSelectionAdapter  = SelectionAdapter(this,ArrayList())
+        binding.selectionRecyclerView.adapter=mSelectionAdapter
 
+        Log.i(TAG,"Recycler view init success in Selection fragment")
     }
+
+
 }

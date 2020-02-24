@@ -64,29 +64,5 @@ class RecipeRepository {
 
     }
 
-   /* private fun updateUIWithResult(arrayList:ArrayList<Recipe>,result: Result){
 
-        Log.d(RecipesFragment.TAG, " Update UI method call ")
-        val recipes :ArrayList<Recipe> = ArrayList()
-        val index: Int=result.to-1
-
-        for (value in result.from..index){
-            recipes.add(result.hits[value].recipe)
-
-            Log.d(RecipesFragment.TAG, " value in update ${recipes[value]}")
-            Log.d(RecipesFragment.TAG, " Hits size in update : ${result.hits.size}")
-        }
-        //   mRecipeAdapter.updateWithDate(recipes)
-
-    }
-*/
-
-/*
-    fun getInstance(): RecipeRepository? {
-        if (newsRepository == null) {
-            newsRepository =
-                RecipeRepository()
-        }
-        return newsRepository
-    }*/
 }

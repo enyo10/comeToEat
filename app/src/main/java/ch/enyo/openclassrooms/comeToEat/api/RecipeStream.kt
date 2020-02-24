@@ -37,7 +37,7 @@ class RecipeStream {
 
 
 
-        fun getSecond():Observable<Result>{
+        /*fun getSecond():Observable<Result>{
             val recipeService: RecipeService =
                 RecipeService.retrofit.create(RecipeService::class.java)
 
@@ -47,7 +47,7 @@ class RecipeStream {
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(15, TimeUnit.SECONDS)
 
-        }
+        }*/
     }
 
 

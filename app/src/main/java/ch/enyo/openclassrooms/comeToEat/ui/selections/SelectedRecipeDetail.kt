@@ -7,23 +7,32 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ch.enyo.openclassrooms.comeToEat.R
-import ch.enyo.openclassrooms.comeToEat.databinding.FragmentRecipeDetailBinding
+import ch.enyo.openclassrooms.comeToEat.databinding.SelectedRecipeDetailFragmentBinding
+import ch.enyo.openclassrooms.comeToEat.models.User
+import ch.enyo.openclassrooms.comeToEat.ui.friends.FriendsAdapter
+import ch.enyo.openclassrooms.comeToEat.ui.friends.FriendsFragment
 import ch.enyo.openclassrooms.comeToEat.ui.main.MainActivity
 import ch.enyo.openclassrooms.comeToEat.utils.SelectedRecipe
 import ch.enyo.openclassrooms.comeToEat.utils.updateRecipeParticipantList
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class SelectedRecipeDetail : Fragment() {
+class SelectedRecipeDetail : FriendsFragment() {
 
     companion object {
         private const val TAG :String ="SelectedRecipeDetail"
@@ -32,25 +41,24 @@ class SelectedRecipeDetail : Fragment() {
     }
 
     private val selectionViewModel by activityViewModels<SelectionViewModel>()
-    private lateinit var recipeDetailBinding:FragmentRecipeDetailBinding
-    private lateinit var webView: WebView
+    private lateinit var selectedRecipeDetailFragmentBinding:SelectedRecipeDetailFragmentBinding
     private lateinit var mSelectedRecipe: SelectedRecipe
+    private  var participantsList : ArrayList<User> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       // return inflater.inflate(R.layout.fragment_recipe_detail, container, false)
-        recipeDetailBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.fragment_recipe_detail,container,false)
-        webView= recipeDetailBinding.webView
-        webView.webViewClient= WebViewClient()
+        selectedRecipeDetailFragmentBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.selected_recipe_detail_fragment,container,false)
 
-        recipeDetailBinding.recipeDetailButton.setOnClickListener{subscribeToInvitation()}
+        selectedRecipeDetailFragmentBinding.choosingButton.setOnClickListener { subscribeToInvitation() }
 
-        return recipeDetailBinding.root
+        initRecyclerView()
+        loadData()
+
+
+        return selectedRecipeDetailFragmentBinding.root
     }
-
-
 
 
 
@@ -58,23 +66,73 @@ class SelectedRecipeDetail : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         Log.d(TAG, " in activity created")
-
-        selectionViewModel.getSelectedSelectedRecipe().observe(viewLifecycleOwner, Observer { selectedRecipe ->updateUI(selectedRecipe!!) })
+        selectionViewModel.getSelectedSelectedRecipe().observe(viewLifecycleOwner, Observer { selectedRecipe ->updateUIWithSelectedRecipe(selectedRecipe!!) })
 
 
     }
 
-    private fun updateUI(selectedRecipe: SelectedRecipe){
+    override fun initRecyclerView() {
+        val recyclerView: RecyclerView = selectedRecipeDetailFragmentBinding.recyclerView
+        val linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerView.layoutManager = linearLayoutManager
+
+        friendsAdapter = FriendsAdapter(this, users)
+
+        recyclerView.adapter = friendsAdapter
+    }
+
+
+    private fun updateUIWithSelectedRecipe(selectedRecipe: SelectedRecipe){
         Log.d(TAG, "Selected Recipe $selectedRecipe")
         mSelectedRecipe =selectedRecipe
-        webView.loadUrl(selectedRecipe.recipeUrl)
+
+        selectedRecipe.image?.let {
+            loadImage( selectedRecipeDetailFragmentBinding.selectedRecipeImage,
+                it
+            )
+        }
+        selectedRecipeDetailFragmentBinding.selectedRecipeName.text=selectedRecipe.recipeLabel
+
+
     }
 
+    override fun updateUI(list: ArrayList<User>) {
+        for(user in list){
+            if (mSelectedRecipe.participants?.contains(user.userId)!!)
+                participantsList.add(user)
+        }
+        super.updateUI(participantsList)
+        Log.d(TAG," participant --  $participantsList")
+
+
+    }
+
+
     private fun subscribeToInvitation(){
+        Log.d(TAG, " On button clicked ......")
+        val date = Calendar.getInstance().time
+        val isValue: Boolean = date.after(mSelectedRecipe.date)
+        if(mSelectedRecipe.participants?.contains(getCurrentUser()!!.uid)!! ||isValue){
+            Toast.makeText(context," You are the Host, :-) ,or to late now",Toast.LENGTH_LONG).show()
+        } else if(isValue){
+            Toast.makeText(context,"  :-) , to late now",Toast.LENGTH_LONG).show()
+        }
+
+        else{
 
         updateRecipeParticipantList(mSelectedRecipe.recipeId,getCurrentUser()!!.uid).addOnSuccessListener {
             Toast.makeText(context,"Subscription success",Toast.LENGTH_LONG).show()
-        }.addOnFailureListener { exception -> Log.d(TAG, exception.localizedMessage) } }
+        }.addOnFailureListener { exception -> Log.d(TAG, exception.localizedMessage) } }}
+
+
+    private fun loadImage(v: ImageView, image:String){
+
+        Glide.with(v.context)
+            .load(image)
+            .apply(RequestOptions())
+            .into(v)
+    }
 
 
 
@@ -85,18 +143,7 @@ class SelectedRecipeDetail : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        // This callback will only be called when MyFragment is at least Started.
-        /*val callback  = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(false){
-            override fun handleOnBackPressed() {
-                findNavController().popBackStack(R.id.selectionFragment, true)
-            }
 
-        })
-        activity!!.onBackPressedDispatcher.addCallback {  }*/
-
-
-
-        // The callback can be enabled or disabled here or in the lambda
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

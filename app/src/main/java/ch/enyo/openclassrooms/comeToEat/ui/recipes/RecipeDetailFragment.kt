@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import java.lang.System.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -106,7 +107,7 @@ class RecipeDetailFragment : Fragment() {
     private fun insertRecipeToFireBase(){
         val userId= getUserId()
 
-        getUser(userId!!)?.addOnSuccessListener {
+        getUser(userId!!).addOnSuccessListener {
             documentSnapshot ->  val user: User?= documentSnapshot?.toObject(User::class.java)
             Log.d(TAG, " user : $user")
             saveSelectedRecipe(user!!.userId!!,mRecipe,date)!!.addOnSuccessListener(
@@ -151,6 +152,7 @@ class RecipeDetailFragment : Fragment() {
             context!!,
             OnDateSetListener { _, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 val newDate = Calendar.getInstance()
+
                 newDate[year, monthOfYear] = dayOfMonth
 
 
@@ -164,6 +166,8 @@ class RecipeDetailFragment : Fragment() {
             newCalendar.get(Calendar.MONTH),
             newCalendar.get(Calendar.DAY_OF_MONTH)
         )
+
+
         mDatePicker.setButton(
             DialogInterface.BUTTON_NEGATIVE,
             getString(R.string.cancel),
@@ -177,6 +181,7 @@ class RecipeDetailFragment : Fragment() {
                 }
             }
         )
+        mDatePicker.datePicker.minDate= currentTimeMillis() - 1000
     }
 
     private fun navigateToRecipeList(){

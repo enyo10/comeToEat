@@ -12,7 +12,7 @@ class RecipesViewModel : ViewModel() {
         const val TAG :String ="RecipesViewModel"
     }
 
-    private var recipes:MutableLiveData<ArrayList<Recipe>> = MutableLiveData<ArrayList<Recipe>>()
+    private var recipes:MutableLiveData<ArrayList<Recipe>> = MutableLiveData()
 
 
 
@@ -20,6 +20,11 @@ class RecipesViewModel : ViewModel() {
 
     fun getRecipes():MutableLiveData<ArrayList<Recipe>>{
         return recipes
+    }
+
+    fun getRecipes(map: MutableMap<String, String>):MutableLiveData<ArrayList<Recipe>> {
+        recipes =recipeRepository.getRecipes(map)
+       return  recipes
     }
 
 
@@ -45,7 +50,7 @@ class RecipesViewModel : ViewModel() {
 
 
     }
-    fun getRecipeQueryMap():MutableLiveData<MutableMap<String, String>>{
+    private fun getRecipeQueryMap():MutableLiveData<MutableMap<String, String>>{
         if(recipeQueryMap.value==null){
             val map = mutableMapOf<String,String>()
             map["q"]= "Fish"

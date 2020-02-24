@@ -15,9 +15,12 @@ import androidx.navigation.fragment.findNavController
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.auth.LoginViewModel
 import ch.enyo.openclassrooms.comeToEat.models.User
+import ch.enyo.openclassrooms.comeToEat.ui.friends.FriendsFragment
 import ch.enyo.openclassrooms.comeToEat.ui.profile.UserProfileFragment
+import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipeDetailFragment
 import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesFragment
 import ch.enyo.openclassrooms.comeToEat.utils.getUser
+import ch.enyo.openclassrooms.comeToEat.utils.saveSelectedRecipe
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -31,7 +34,7 @@ import com.google.firebase.auth.FirebaseUser
         const val TAG :String ="BaseFragment"
     }
     val viewModel by activityViewModels<LoginViewModel>()
-    protected lateinit var authenticatedUser: User
+     lateinit var authenticatedUser: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +46,9 @@ import com.google.firebase.auth.FirebaseUser
     }
 
     protected abstract fun getFragmentLayout(): Int
+    protected abstract fun loadData()
+    protected abstract fun initRecyclerView()
+   // protected abstract fun updateUI(list: List<User>)
 
 
     /**
@@ -73,9 +79,21 @@ import com.google.firebase.auth.FirebaseUser
         return FirebaseAuth.getInstance().currentUser
     }
 
+
+
+    fun getSomeUser(userId:String){
+
+        getUser(userId).addOnSuccessListener {
+                documentSnapshot ->  val user: User?= documentSnapshot?.toObject(User::class.java)
+            Log.d( TAG, " user : $user")
+
+        }
+    }
+
+
     protected fun getConnectedFromFireBase(){
         onFailureListener()?.let {
-            getUser(getCurrentUser()!!.uid)!!.addOnFailureListener(it)
+            getUser(getCurrentUser()!!.uid).addOnFailureListener(it)
                 .addOnSuccessListener {
                     documentSnapshot -> run { authenticatedUser = documentSnapshot!!.toObject(User::class.java) as User }
 
@@ -84,6 +102,11 @@ import com.google.firebase.auth.FirebaseUser
         }
 
     }
+
+
+
+
+
 
     protected fun onFailureListener(): OnFailureListener? {
         return OnFailureListener { e: Exception? ->

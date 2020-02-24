@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -18,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.databinding.FragmentLoginBinding
+import ch.enyo.openclassrooms.comeToEat.ui.main.MainActivity
 import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesFragment
 import ch.enyo.openclassrooms.comeToEat.utils.createUser
 import com.firebase.ui.auth.AuthUI
@@ -34,7 +36,6 @@ class LoginFragment : Fragment() {
     companion object{
         const val TAG="LoginFragment"
         const val RC_SIGN_IN = 123
-
 
     }
 
@@ -84,6 +85,12 @@ class LoginFragment : Fragment() {
             }
         })
     }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        (context as MainActivity).navView.visibility=View.GONE
+        menu.clear()
+    }
+
 
     private fun startSignInFlow() {
 
@@ -156,9 +163,6 @@ class LoginFragment : Fragment() {
     private fun isCurrentUserLogged(): Boolean? {
         return getCurrentUser() != null
     }
-
-
-
 
 
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import ch.enyo.openclassrooms.comeToEat.BR
@@ -14,6 +15,7 @@ import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.User
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.common.io.Resources
 
 class FriendsAdapter(val fragment: FriendsFragment,var users:ArrayList<User>) :RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>(){
 
@@ -36,7 +38,13 @@ class FriendsAdapter(val fragment: FriendsFragment,var users:ArrayList<User>) :R
     override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) {
       val user :User = users[position]
         holder.bind(user)
-
+        holder.itemRowBinding.fragmentFriendsListItemText.text=user.username
+        holder.itemRowBinding.fragmentWorkmatesListItemImage
+        val imageView = holder.itemRowBinding.fragmentWorkmatesListItemImage
+       // user.imagesUrl?.let { loadImage(imageView, it) }
+        if(user.imagesUrl!=null){
+            loadImage(imageView, user.imagesUrl!!)
+        }
 
     }
 
@@ -44,7 +52,7 @@ class FriendsAdapter(val fragment: FriendsFragment,var users:ArrayList<User>) :R
 
         Glide.with(v.context)
             .load(image)
-            .apply(RequestOptions())
+            .apply(RequestOptions().circleCrop())
             .into(v)
     }
 

@@ -17,4 +17,24 @@ class Converter {
         return value.toString()
     }
 
+
+     fun formatString(list: List<String>):String{
+        var value=""
+        val stringSize :Int=list.size-1
+        for(a in 0..stringSize){
+            value+= list[a]+"\n"
+        }
+        return value
+    }
+
+     fun formatStringListToNewLine(list: List<String>):String{
+        var value=""
+        val stringSize :Int=list.size-1
+        for(a in 0..stringSize){
+            value+= list[a]+"\n"
+        }
+        return value
+
+    }
+
 }

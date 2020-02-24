@@ -119,6 +119,18 @@ class UserProfileFragment : BaseFragment() {
         return R.layout.user_profile_fragment
     }
 
+    override fun loadData() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun initRecyclerView() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+   /* override fun updateUI(list: List<*>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+*/
     private fun logout(){
         (context as MainActivity).signOutFromFirebase()
     }

@@ -70,7 +70,7 @@ val recipeCollection: CollectionReference = FirebaseFirestore.getInstance().coll
 fun saveSelectedRecipe(uid:String, recipe: Recipe,date:Date): Task<Void?>? {
 
     val recipeId: String = recipeCollection.document().id
-    val selectedRecipe= SelectedRecipe(recipeId,recipe.label,recipe.uri,recipe.url,recipe.image,date, arrayListOf(uid))
+    val selectedRecipe= SelectedRecipe(recipeId,recipe.label,recipe.uri,recipe.url,recipe.image,date,recipe.dietLabels,recipe.ingredientLines,recipe.healthLabels,arrayListOf(uid))
 
     return recipeCollection
         .document(recipeId) // Setting uID for Document
@@ -92,9 +92,6 @@ fun updateRecipeParticipantList(recipeId:String?,uid: String):Task<Void>{
 
 }
 
-
-
-
 data class SelectedRecipe(
     val recipeId: String? = null,
     val recipeLabel: String? =null,
@@ -102,25 +99,35 @@ data class SelectedRecipe(
     val recipeUrl: String? = null,
     val image: String?=null,
     val date: Date? = null,
+    val dietLabel: List<String>? = null,
+    val ingredients: List<String>? = null,
+    val healthLabels:List<String>? = null,
     val participants: List<String>? = null
-)
-
-/*data class SelectedRecipe(val id: String, val userId: String,val recipe: Recipe,val date:String){
-    var participants:ArrayList<String> = arrayListOf()
-
-
-
-    fun participants_number():Int{
-
-        return participants.size
+){
+    fun getOwnerId(): String? {
+        return participants?.get(0)
     }
+}
 
-    fun addParticipant(uid:String){
 
+fun formatString(list: List<String>):String{
+    var value=""
+    val stringSize :Int=list.size-1
+    for(a in 0..stringSize){
+        value+= list[a]+"\n"
     }
-}*/
+    return value
+}
 
+fun formatStringListToNewLine(list: List<String>):String{
+    var value=""
+    val stringSize :Int=list.size-1
+    for(a in 0..stringSize){
+        value+= list[a]+"\n"
+    }
+    return value
 
+}
 
 
 

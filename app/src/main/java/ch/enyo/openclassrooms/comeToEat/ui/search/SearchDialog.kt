@@ -26,9 +26,6 @@ class SearchDialog : DialogFragment() {
         private const val TAG :String="SearchDialog"
     }
 
-
-
-
     private lateinit var searchViewModel: SearchDialogViewModel
     private lateinit var binding:SearchDialogFragmentBinding
 

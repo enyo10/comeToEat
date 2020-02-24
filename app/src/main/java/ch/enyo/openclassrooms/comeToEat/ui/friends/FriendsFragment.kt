@@ -15,7 +15,7 @@ import ch.enyo.openclassrooms.comeToEat.models.User
 import ch.enyo.openclassrooms.comeToEat.utils.getAllUsers
 
 
-class FriendsFragment : BaseFragment() {
+open class FriendsFragment : BaseFragment() {
 
     companion object {
         const val TAG = "FriendsFragment"
@@ -23,8 +23,8 @@ class FriendsFragment : BaseFragment() {
 
     private lateinit var binding: FragmentFriendsBinding
     private lateinit var notificationsViewModel: FriendsViewModel
-    private lateinit var friendsAdapter: FriendsAdapter
-    private var users: ArrayList<User> = arrayListOf()
+    protected lateinit var friendsAdapter: FriendsAdapter
+    protected var users: ArrayList<User> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,9 +48,9 @@ class FriendsFragment : BaseFragment() {
         //  })
         observeAuthenticationState()
         initRecyclerView()
-        loadUsers()
+        loadData()
         binding.swipeRefresh.setOnRefreshListener{
-            loadUsers()
+            loadData()
         }
 
         return binding.root
@@ -60,7 +60,15 @@ class FriendsFragment : BaseFragment() {
         return R.layout.fragment_friends
     }
 
-    private fun initRecyclerView() {
+    override fun loadData() {
+        getAllUsers().addOnSuccessListener { result ->
+            run {
+                updateUI(result.toObjects(User::class.java) as ArrayList<User>)
+            }
+        }
+    }
+
+    override fun initRecyclerView() {
         val recyclerView: RecyclerView = binding.recyclerView
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -69,22 +77,19 @@ class FriendsFragment : BaseFragment() {
         friendsAdapter = FriendsAdapter(this, users)
 
         recyclerView.adapter = friendsAdapter
-
     }
 
+   /* override fun updateUI(list: List<*>) {
 
-    private fun loadUsers() {
-        getAllUsers().addOnSuccessListener { result ->
-            run {
-                updateUI(result.toObjects(User::class.java) as ArrayList<User>)
-            }
-        }
-
-
+        val users : ArrayList<User> = list as ArrayList<User>
     }
+*/
 
-    private fun updateUI(list: ArrayList<User>) {
-        binding.swipeRefresh.isRefreshing=false
+
+
+
+   open  fun updateUI(list: ArrayList<User>) {
+      //  binding.swipeRefresh.isRefreshing=false
         users.clear()
         users.addAll(list)
         friendsAdapter.notifyDataSetChanged()
