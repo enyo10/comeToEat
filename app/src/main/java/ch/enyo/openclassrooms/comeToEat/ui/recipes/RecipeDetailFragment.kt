@@ -9,6 +9,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -24,6 +25,7 @@ import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.databinding.FragmentRecipeDetailBinding
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.User
+import ch.enyo.openclassrooms.comeToEat.ui.main.MainActivity
 import ch.enyo.openclassrooms.comeToEat.utils.getUser
 import ch.enyo.openclassrooms.comeToEat.utils.saveSelectedRecipe
 import com.google.android.gms.tasks.OnSuccessListener
@@ -66,7 +68,6 @@ class RecipeDetailFragment : Fragment() {
        webView = recipeDetailBinding.webView
         webView.settings.setSupportZoom(true)
 
-       // webView.webViewClient= WebViewClient()
         webView.webViewClient= WebViewClient()
 
 
@@ -83,12 +84,24 @@ class RecipeDetailFragment : Fragment() {
         return  recipeDetailBinding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        (context as MainActivity).navView.visibility=View.GONE
+        menu.clear()
+    }
+
 
     private fun updateUI(recipe: Recipe){
         mRecipe= recipe
         webView.loadUrl(recipe.url)
 
     }
+
 
    private fun observeSelectedRecipe(){
         recipesViewModel.getSelectedRecipe().observe(viewLifecycleOwner, Observer {

@@ -62,4 +62,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="participants">Participants</string>
     <string name="selected_recipe_health_label">Health label</string>
+    <string name="rrecipe_detail">Recipe details</string>
+    <string name="recipe_detail">Recipe details</string>
 </resources>

@@ -5,7 +5,6 @@ import ch.enyo.openclassrooms.comeToEat.models.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 //-************************ USER *******************************************************33
@@ -63,7 +62,6 @@ fun deleteUser(uid: String): Task<Void?>? {
 
 
 const val RECIPE_COLLECTION = "recipes"
-const val PARTICIPANT_LIST = "participants"
 val recipeCollection: CollectionReference = FirebaseFirestore.getInstance().collection(RECIPE_COLLECTION)
 
 // --- CREATE ---
@@ -75,6 +73,11 @@ fun saveSelectedRecipe(uid:String, recipe: Recipe,date:Date): Task<Void?>? {
     return recipeCollection
         .document(recipeId) // Setting uID for Document
         .set(selectedRecipe) // Setting object for Document
+}
+
+fun getSelectedRecipe(recipeId:String): Task<DocumentSnapshot?> {
+    return recipeCollection.document(recipeId)
+        .get()
 }
 
 
@@ -103,11 +106,11 @@ data class SelectedRecipe(
     val ingredients: List<String>? = null,
     val healthLabels:List<String>? = null,
     val participants: List<String>? = null
-){
+)/*{
     fun getOwnerId(): String? {
         return participants?.get(0)
     }
-}
+}*/
 
 
 fun formatString(list: List<String>):String{

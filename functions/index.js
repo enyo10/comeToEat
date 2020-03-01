@@ -26,6 +26,7 @@ exports.insertRecipeReq = functions.firestore
 
       // access a particular field as you would any JS property
       const userInfo = newValue.id;
+      const label =newValue.recipeLabel
 
        console.log(`selected recipe ${newValue}`);
               console.log(`user id ${userInfo}`);
@@ -36,9 +37,11 @@ exports.insertRecipeReq = functions.firestore
           const payload = {
               notification: {
                   title:"Invitation",
-                  body: " Come to EAT : " + newValue.label
+                  body: " Come to EAT : " + label
                 //  sound: "default"
               },
+              data :{ recipeId : newValue.recipeId
+              }
           };
 
         //Create an options object that contains the time to live for the notification and the priority

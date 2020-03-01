@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.databinding.SearchDialogFragmentBinding
 import ch.enyo.openclassrooms.comeToEat.ui.main.MainViewModel
-import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesViewModel
 import ch.enyo.openclassrooms.comeToEat.utils.Converter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,8 +28,8 @@ class SearchDialog : DialogFragment() {
     private lateinit var searchViewModel: SearchDialogViewModel
     private lateinit var binding:SearchDialogFragmentBinding
 
-    private val shareViewModel: MainViewModel by activityViewModels()
-    private val recipesViewModel: RecipesViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
+   // private val recipesViewModel: RecipesViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
        // return super.onCreateDialog(savedInstanceState)
@@ -55,8 +54,6 @@ class SearchDialog : DialogFragment() {
         binding.converter= Converter()
 
         binding.actionSearch.setOnClickListener{
-            Log.i(TAG, " search basis ${searchViewModel.searchBasis.value}")
-            Log.i(TAG, " max ingredient ${searchViewModel.maxIngredient.value}")
 
             var noErrors = true
 
@@ -66,13 +63,13 @@ class SearchDialog : DialogFragment() {
             val dishType :String? =searchViewModel.dishType.value
             val ing :Int? =searchViewModel.maxIngredient.value
 
-
-
             if(q!!.isEmpty()){
-                binding.searchBasisTextLayout.error = "Must be set"
+               // binding.searchBasisTextLayout.error = "Must be set"
+                binding.searchBasisInputText.error=" Must be set"
                 noErrors = false
             }else{
-                binding.searchBasisTextLayout.error = null
+            //    binding.searchBasisTextLayout.error = null
+                binding.searchBasisInputText.error=null
 
             }
 
@@ -87,7 +84,7 @@ class SearchDialog : DialogFragment() {
 
                 Log.d(TAG, " query map ...$myQueryMap")
 
-                shareViewModel.setRecipeQueryMap(myQueryMap)
+                mainViewModel.setRecipeQueryMap(myQueryMap)
                // recipesViewModel.setRecipeQueryMap(myQueryMap)
 
             }

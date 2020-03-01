@@ -20,8 +20,6 @@ class RecipeStream {
         fun getRecipeResult(param: MutableMap<String, String>): Observable<Result> {
             param["app_id"]= "def9003a"
             param["app_key"]= BuildConfig.api_key
-            param["from"]= "0"
-            param["to"]= "20"
 
             val recipeService: RecipeService =
                 RecipeService.retrofit.create(RecipeService::class.java)

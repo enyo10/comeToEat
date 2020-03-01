@@ -17,11 +17,12 @@
         <!--WORKMATES PHOTO-->
         <ImageView
             android:id="@+id/fragment_workmates_list_item_image"
-            android:layout_width="72dp"
-            android:layout_height="79dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_margin="10dp"
             android:contentDescription="@string/friends_profile"
-            android:src="@drawable/ic_participant"
+            android:src="@drawable/ic_anon_user_48dp"
+            
 
             />
 

@@ -13,6 +13,17 @@
         tools:context=".ui.selections.SelectedRecipeDetail">
 
         <!--RECIPE IMAGE-->
+       <!-- <ImageView
+            android:id="@+id/selected_recipe_image"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:contentDescription="@string/recipe_image"
+
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />-->
         <ImageView
             android:id="@+id/selected_recipe_image"
             android:layout_width="match_parent"
@@ -22,14 +33,13 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="-11dp" />
 
-        <!--RESTAURANT INFO CHOICE-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/choosing_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_checked"
-            app:backgroundTint="@color/white"
+            android:backgroundTint="#F4F4F0"
+            android:src="@drawable/add_person"
             app:fabSize="auto"
             app:layout_constraintBottom_toBottomOf="@+id/selected_recipe_image"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,30 +47,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selected_recipe_image" />
 
-        <!-- android:layout_width="54dp"
-         android:layout_height="155dp"-->
-
-       <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton1"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_unchecked"
-            app:backgroundTint="@color/white"
-            app:fabSize="auto"
-            app:layout_constraintBottom_toBottomOf="@+id/selected_recipe_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
-            app:layout_constraintTop_toBottomOf="@+id/selected_recipe_image"
-            app:layout_constraintVertical_bias="0.562" />-->
-
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="91dp"
-            android:background="@color/colorSand"
+            android:background="@color/colorOrangeC"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selected_recipe_image">
 
@@ -75,65 +67,59 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:hint="@string/recipe_name"
-                android:textColor="@color/white"
+                android:textColor="#FFFFFF"
+                android:textColorHint="@color/white"
                 android:textSize="18sp"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
-                android:id="@+id/selected_recipe_health_label"
+                android:id="@+id/selected_recipe_date"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:layout_below="@+id/selected_recipe_name"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="7dp"
                 android:layout_marginBottom="2dp"
-                android:hint="@string/selected_recipe_health_label">
+                android:gravity="center"
+                android:hint="@string/selected_recipe_health_label"
+                android:textColor="@color/white">
 
             </TextView>
-        </RelativeLayout>
 
+
+        </RelativeLayout>
 
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:padding="5dp"
             android:weightSum="100"
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
-           <TextView
-               android:id="@+id/participants"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="@string/participants"
-               android:gravity="center"
-               >
+            <TextView
+                android:id="@+id/participants"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/participants"
+                android:textColor="@color/design_default_color_primary_dark">
 
-           </TextView>
+            </TextView>
 
         </LinearLayout>
 
-
-        <!--RESTAURANT INFO WORKMATE LIST-->
-       <!-- <include
-            android:id="@+id/recycler_view"
-            layout="@layout/recycler_view_layout"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="410dp"
+            android:layout_height="382dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">

@@ -22,7 +22,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
     companion object{
-        private const val TAG: String= "MyFirebaseMessagingService"
+        private const val TAG: String= "MyFirebaseMessaging"
 
     }
 
@@ -36,16 +36,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             if (remoteMessage.notification != null) {
                 // 1 - Get message sent by Firebase
                 val message = remoteMessage.notification!!.body
+
                 //2 - Show message in console
-                Log.d(TAG, "message :-- $message")
+                Log.d(TAG, "m :-- $message")
 
                 Log.d(TAG, "message -- $remoteMessage")
+                Log.d(TAG, " second--- ${remoteMessage.data["recipeId"]}")
+                Log.d(TAG," data ++++ ${remoteMessage.data}")
                showNotification(
                     remoteMessage.notification?.title,
-                    remoteMessage.notification?.body
+                    remoteMessage.notification?.body,
+                    remoteMessage.data
+
                 )
             } else {
-                showNotification(remoteMessage.data["title"], remoteMessage.data["message"])
+                showNotification(remoteMessage.data["title"], remoteMessage.data["message"],remoteMessage.data)
                 Log.d(TAG, " error")
             }
 
@@ -54,7 +59,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun showNotification(title: String?, body: String?) {
+    private fun showNotification(title: String?, body: String?,data :MutableMap<String,String>) {
 
 
         val intent = Intent(this,MainActivity::class.java).apply {
@@ -62,9 +67,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         }
         intent.putExtra("one",1)
+        intent.putExtra("recipeId",data["recipeId"])
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent,  PendingIntent.FLAG_UPDATE_CURRENT)
-
-
 
         val channelId = getString(R.string.channel_id)
         val channelName = getString(R.string.channel_name)

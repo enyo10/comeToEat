@@ -35,8 +35,6 @@ class RecipesAdapter( val fragment: RecipesFragment,private var recipes:ArrayLis
     }
 
     override fun getItemCount(): Int {
-        Log.d(TAG, " Recipe list size in Adapter : ${recipes.size}")
-
         return recipes.size
     }
 
@@ -46,11 +44,9 @@ class RecipesAdapter( val fragment: RecipesFragment,private var recipes:ArrayLis
         holder.itemRowBinding.itemRecipeName.text=recipe.label
         val dietLabel =formatString(recipe.dietLabels)
 
-        Log.d(TAG, " diet label -- $dietLabel")
         holder.itemRowBinding.recipeDietLabel.text=dietLabel
         holder.itemRowBinding.itemRecipeHearthLabel.text=formatStringListToNewLine(recipe.healthLabels)
 
-        Log.d(TAG, " image : ${recipe.image}")
         loadImage(holder.itemRowBinding.recipeImageView,recipe.image)
 
 
@@ -78,16 +74,16 @@ class RecipesAdapter( val fragment: RecipesFragment,private var recipes:ArrayLis
     private fun loadImage(v: ImageView, image:String){
 
          Glide.with(v.context)
-            .load(image)
+                .load(image)
             .apply(RequestOptions())
             .into(v)
     }
 
 
-    fun updateWithDate(list:ArrayList<Recipe>){
+  /*  fun updateWithDate(list:ArrayList<Recipe>){
         recipes=list
         notifyDataSetChanged()
-    }
+    }*/
 
 
     class RecipeViewHolder(var recipesFragment: RecipesFragment,binding: RecipeListItemBinding):RecyclerView.ViewHolder(binding.root),
@@ -106,8 +102,6 @@ class RecipesAdapter( val fragment: RecipesFragment,private var recipes:ArrayLis
         }
 
         override fun onClick(v: View?) {
-
-           Log.d(TAG, "on clicked ${itemRowBinding.recipe?.label}")
 
            recipesFragment.recipesViewModel.setSelectedRecipe(itemRowBinding.recipe!!)
             recipesFragment.navigateToDetailsFragment()

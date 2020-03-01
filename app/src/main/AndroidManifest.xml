@@ -8,12 +8,14 @@
     <application
 
         android:allowBackup="true"
-        android:icon="@drawable/tomato"
         android:label="@string/app_name"
         android:roundIcon="@drawable/tomato"
+        android:icon="@drawable/tomato"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
         <activity android:name=".services.RecipeAlertDetail">
 
 

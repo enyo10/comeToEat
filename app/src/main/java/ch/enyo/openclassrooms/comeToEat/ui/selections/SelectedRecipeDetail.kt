@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -55,7 +56,6 @@ class SelectedRecipeDetail : FriendsFragment() {
 
         initRecyclerView()
         loadData()
-
 
         return selectedRecipeDetailFragmentBinding.root
     }
@@ -93,6 +93,9 @@ class SelectedRecipeDetail : FriendsFragment() {
             )
         }
         selectedRecipeDetailFragmentBinding.selectedRecipeName.text=selectedRecipe.recipeLabel
+        selectedRecipeDetailFragmentBinding.selectedRecipeDate.text=
+            SimpleDateFormat("dd/MM/yyyy", Locale.US).format(selectedRecipe.date)
+
 
 
     }
@@ -104,37 +107,34 @@ class SelectedRecipeDetail : FriendsFragment() {
         }
         super.updateUI(participantsList)
         Log.d(TAG," participant --  $participantsList")
-
-
     }
 
-
     private fun subscribeToInvitation(){
-        Log.d(TAG, " On button clicked ......")
         val date = Calendar.getInstance().time
         val isValue: Boolean = date.after(mSelectedRecipe.date)
-        if(mSelectedRecipe.participants?.contains(getCurrentUser()!!.uid)!! ||isValue){
-            Toast.makeText(context," You are the Host, :-) ,or to late now",Toast.LENGTH_LONG).show()
-        } else if(isValue){
-            Toast.makeText(context,"  :-) , to late now",Toast.LENGTH_LONG).show()
+        when {
+            mSelectedRecipe.participants?.contains(getCurrentUser()!!.uid)!! -> {
+                Toast.makeText(context," You are the Host, :-), are you forger ? aïe,aïe",Toast.LENGTH_LONG).show()
+            }
+            isValue -> {
+                Toast.makeText(context,"  :-) , to late now",Toast.LENGTH_LONG).show()
+            }
+            else -> {
+
+                updateRecipeParticipantList(mSelectedRecipe.recipeId,getCurrentUser()!!.uid).addOnSuccessListener {
+                    Toast.makeText(context,"Subscription success",Toast.LENGTH_LONG).show()
+                    loadData()
+                }.addOnFailureListener { exception -> Log.d(TAG, exception.localizedMessage) } }
         }
-
-        else{
-
-        updateRecipeParticipantList(mSelectedRecipe.recipeId,getCurrentUser()!!.uid).addOnSuccessListener {
-            Toast.makeText(context,"Subscription success",Toast.LENGTH_LONG).show()
-        }.addOnFailureListener { exception -> Log.d(TAG, exception.localizedMessage) } }}
-
+    }
 
     private fun loadImage(v: ImageView, image:String){
 
         Glide.with(v.context)
             .load(image)
-            .apply(RequestOptions())
+            .apply(RequestOptions.centerCropTransform())
             .into(v)
     }
-
-
 
     private fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
@@ -156,7 +156,4 @@ class SelectedRecipeDetail : FriendsFragment() {
         val ab = (activity as AppCompatActivity).supportActionBar
         ab?.setDisplayHomeAsUpEnabled(true)
     }
-
-
-
 }

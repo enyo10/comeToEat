@@ -1,11 +1,9 @@
 package ch.enyo.openclassrooms.comeToEat.ui.selections
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import ch.enyo.openclassrooms.comeToEat.BR
@@ -13,6 +11,7 @@ import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.databinding.FragmentSelectionItemBinding
 import ch.enyo.openclassrooms.comeToEat.models.User
 import ch.enyo.openclassrooms.comeToEat.utils.SelectedRecipe
+import ch.enyo.openclassrooms.comeToEat.utils.formatStringListToNewLine
 import ch.enyo.openclassrooms.comeToEat.utils.getUser
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -51,6 +50,11 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
         holder.itemRowBinding.itemRecipeDate.text= SimpleDateFormat("dd/MM/yyyy", Locale.US).format(selectedRecipe.date)
         holder.itemRowBinding.itemRecipeParticipants.text=selectedRecipe.participants!!.size.toString()
         holder.itemRowBinding.itemRecipeLabel.text=selectedRecipe.recipeLabel
+        holder.itemRowBinding.itemRecipeLabel.text= selectedRecipe.healthLabels?.let {
+            formatStringListToNewLine(
+                it
+            )
+        }
 
         holder.getRecipeOwner(selectedRecipe.participants[0])
 
@@ -78,7 +82,7 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
 
 
 
-    class SelectionViewHolder( val selectionFragment: SelectionFragment, binding: FragmentSelectionItemBinding) : RecyclerView.ViewHolder(binding.root),
+    class SelectionViewHolder(private val selectionFragment: SelectionFragment, binding: FragmentSelectionItemBinding) : RecyclerView.ViewHolder(binding.root),
     View.OnClickListener{
 
 
@@ -86,8 +90,6 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
 
 
         init {
-            Log.d(TAG, " in init ")
-           // this.itemRowBinding.root.setOnClickListener(this)
             itemRowBinding.root.setOnClickListener(this)
         }
 
@@ -104,14 +106,11 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
 
         }
 
-
         fun getRecipeOwner(userId:String){
 
             getUser(userId).addOnSuccessListener {
                     documentSnapshot ->  val user = documentSnapshot?.toObject(User::class.java)
                 itemRowBinding.itemRecipeHost.text=user!!.username
-
-                Log.d(TAG, " user : $user")
 
             }
         }

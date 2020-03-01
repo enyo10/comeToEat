@@ -36,9 +36,11 @@ class RecipeRepository {
 
                 Log.d(RecipesFragment.TAG, " Update UI method call ")
                 val recipes :ArrayList<Recipe> = ArrayList()
-                val index: Int=result.to-1
+                val count: Int=result.to - result.from-1
+                val index :Int =0
 
-                for (value in result.from..index){
+
+                for (value in index..count){
                     recipes.add(result.hits[value].recipe)
 
                     Log.d(RecipesFragment.TAG, " value in update ${recipes[value]}")

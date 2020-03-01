@@ -11,6 +11,10 @@
     <color name="gray">#A2A0A0</color>
 
     <!--Transparency-->
+    <color name="colorOrange">#fc3f1b</color>
+    <color name="colorOrangeBis">#c41b00</color>
+    <color name="colorOrangeC">#fc7540</color>
+
     <color name="colorError">#FF5252</color>
     <color name="colorGreen">#6BB18C</color>
     <color name="colorSandLight">#F3F0E9</color>

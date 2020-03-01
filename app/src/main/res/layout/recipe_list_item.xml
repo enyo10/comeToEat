@@ -43,7 +43,6 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-
             android:id="@+id/item_recipe_data"
             android:layout_width="0dp"
             android:layout_weight="50"
@@ -74,7 +73,6 @@
                 android:gravity="center"
                 android:hint="@string/diet_label"
                 android:textSize="20sp"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/item_recipe_name" />
 

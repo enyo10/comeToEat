@@ -22,6 +22,9 @@ import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.User
 import ch.enyo.openclassrooms.comeToEat.ui.profile.UserProfileViewModel
 import ch.enyo.openclassrooms.comeToEat.ui.search.SearchDialog
+import ch.enyo.openclassrooms.comeToEat.ui.selections.SelectionViewModel
+import ch.enyo.openclassrooms.comeToEat.utils.SelectedRecipe
+import ch.enyo.openclassrooms.comeToEat.utils.getSelectedRecipe
 import ch.enyo.openclassrooms.comeToEat.utils.getUser
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
@@ -47,6 +50,7 @@ class RecipesFragment : Fragment() {
     private val mainViewModel by activityViewModels<MainViewModel>()
 
      val recipesViewModel by activityViewModels<RecipesViewModel>()
+    private val selectionViewModel by activityViewModels<SelectionViewModel>()
 
     private var myStaticValue =0
 
@@ -54,18 +58,21 @@ class RecipesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.fragment_recipes,container,false)
 
-
         observeAuthenticationState()
         initRecyclerView()
         initRefreshLayout()
 
 
-        binding.searchButton.setOnClickListener {
+        binding.searchButton.setOnClickListener { initAndShowSearchDialog() }
 
-            initAndShowSearchDialog()
-        }
+        selectionViewModel.getNewSelectedRecipeId()
+            .observe(viewLifecycleOwner, Observer { selectedRecipeId ->
+                if (selectedRecipeId != null) {
+                    setNewSelectedRecipe(selectedRecipeId)
+                }
+            })
 
-        mainViewModel.getRecipeQueryMap().observe(this,Observer<MutableMap<String,String>>{
+        mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
                 map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
         })
 
@@ -74,13 +81,13 @@ class RecipesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
        /* mainViewModel.getRecipeQueryMap().observe(this,Observer<MutableMap<String,String>>{
             map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
         })*/
 
 
     }
+
 
     private fun initRecyclerView(){
         val linearLayoutManager = LinearLayoutManager(context)
@@ -95,58 +102,57 @@ class RecipesFragment : Fragment() {
     private fun initRefreshLayout() {
         binding.recipesSwipeRefreshLayout.setOnRefreshListener {
 
-          if  (binding.recipesProgressBar.visibility==View.VISIBLE)
-                                binding.recipesProgressBar.visibility=View.GONE
+         /* if  (binding.recipesProgressBar.visibility==View.VISIBLE)
+                                binding.recipesProgressBar.visibility=View.GONE*/
             myStaticValue +=20
 
-            var from = myStaticValue
-            var  to = from +20
+            val newFrom = myStaticValue
+            val  to = newFrom +20
 
-            Log.d(TAG, " to --- $to")
-
-            Log.d(TAG, " from --- $from")
-
-            mMap["from"]= "$from"
+            mMap["from"]= newFrom.toString()
             mMap["to"]= "$to"
+            Log.d(TAG ," map ++++ $mMap")
+            mainViewModel.setRecipeQueryMap(mMap)
 
-            updateWithSwipeRefresh(mMap)
             Log.d(TAG, " map --- $mMap")
 
-            binding.recipesSwipeRefreshLayout.isRefreshing = false
+           /* mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
+                    map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
+            })*/
+
+           // binding.recipesSwipeRefreshLayout.isRefreshing = false
         }
     }
+
 
     private fun updateQueryMapAndGetRecipes(map: MutableMap<String, String>){
         binding.recipesProgressBar.visibility=View.VISIBLE
         this.mMap = map
 
-        recipesViewModel.getRecipes(map).observe(
-            this,
-            Observer<ArrayList<Recipe>> {
-                list: ArrayList<Recipe> -> updateRecipes(list)
-            }
+        getRecipesAndUpdateUI(map)
 
-        )
       if(binding.recipesProgressBar.visibility==View.VISIBLE)
         binding.recipesProgressBar.visibility=View.INVISIBLE
-
     }
 
-    private fun updateWithSwipeRefresh(map: MutableMap<String, String>){
+
+    private fun getRecipesAndUpdateUI(map: MutableMap<String, String>){
         recipesViewModel.getRecipes(map).observe(
-            this,
+            viewLifecycleOwner,
             Observer<ArrayList<Recipe>> {
                     list: ArrayList<Recipe> -> updateRecipes(list)
             }
         )
     }
 
-
     private fun updateRecipes(list:ArrayList<Recipe>){
         Log.d(TAG, " update list: list size ${list.size}")
+        binding.recipesSwipeRefreshLayout.isRefreshing=false
         this.mRecipes.clear()
         this.mRecipes.addAll(list)
         mRecipeAdapter.notifyDataSetChanged()
+        binding.recipesProgressBar.visibility=View.GONE
+
     }
 
     /**
@@ -172,41 +178,9 @@ class RecipesFragment : Fragment() {
         })
     }
 
-
     fun navigateToDetailsFragment(){
         findNavController().navigate(R.id.recipeDetailFragment)
     }
-
-
-  /* private fun loadRecipeData(map:MutableMap<String,String>){
-
-
-       "https://api.edamam.com/search?" +"q=meal" + "&app_id=def9003a" + "&app_key=5afe494e2a6ed914cb7f64154b6e0203" + "&from=0" + "&to=20"
-
-      // val map: Map<String, String> = ImmutableMap.of("q","meal","app_id", "def9003a","app_key","5afe494e2a6ed914cb7f64154b6e0203")
-
-        myCompositeDisposable = RecipeStream.getRecipeResult(map)
-
-            .subscribeWith(object : DisposableObserver<Result>() {
-               override fun onNext(result: Result) {
-
-                    updateUIWithResult(result)
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.i("TAG", "aie, error in recipe search: " + Log.getStackTraceString(e)
-                    )
-                }
-
-                override fun onComplete() {
-                    Log.i(TAG, " Recipes  downloaded ")
-                    *//*if(binding.recipesProgressBar.visibility==View.VISIBLE)
-                    binding.recipesProgressBar.visibility=View.GONE*//*
-                }
-
-            })
-
-    }*/
 
     /**
      * This method to init and show search dialog fragment.
@@ -220,16 +194,11 @@ class RecipesFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         myCompositeDisposable?.dispose()
-
     }
 
-
     private fun getConnectedFromFireBase(){
-                     /* getUser(getCurrentUser()!!.uid)!!.addOnSuccessListener {
-                          documentSnapshot -> setAuthenticatedUser(documentSnapshot!!.toObject(User::class.java) as User )}
-                    */
+
        val viewModel= ViewModelProvider(this).get(UserProfileViewModel::class.java)
 
         getUser(getCurrentUser()!!.uid).addOnSuccessListener { document ->
@@ -244,6 +213,14 @@ class RecipesFragment : Fragment() {
                 Log.d(TAG, "get failed with ", exception)
             }
     }
+
+    private fun setNewSelectedRecipe(selectedRecipeId:String){
+        getSelectedRecipe(selectedRecipeId).addOnSuccessListener {
+                documentSnapshot ->  selectionViewModel.setSelectedSelectedRecipe( documentSnapshot!!.toObject(SelectedRecipe::class.java) as SelectedRecipe)
+            selectionViewModel.getNewSelectedRecipeId().value = null
+
+            findNavController().navigate(R.id.selectedRecipeDetail) }
+        }
 
 
     private fun onFailureListener(): OnFailureListener? {

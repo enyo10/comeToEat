@@ -9,20 +9,23 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import ch.enyo.openclassrooms.comeToEat.BuildConfig
+//import ch.enyo.openclassrooms.comeToEat.BuildConfig
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.Result
 import ch.enyo.openclassrooms.comeToEat.models.User
+import ch.enyo.openclassrooms.comeToEat.ui.selections.SelectionViewModel
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -40,10 +43,12 @@ class MainActivity : AppCompatActivity() {
         const val DELETE_USER_TASK = 20
         const val TAG= "MainActivity"
     }
+    private val selectionViewModel by viewModels<SelectionViewModel>()
 
-    private val FCMAPI = "https://fcm.googleapis.com/fcm/send"
+
+   /* private val FCMAPI = "https://fcm.googleapis.com/fcm/send"
     private val serverKey =
-        "key=" + BuildConfig.SERVER_KEY
+        "key=" + BuildConfig.SERVER_KEY*/
     private val contentType = "application/json"
     private val requestQueue: RequestQueue by lazy {
         Volley.newRequestQueue(this.applicationContext)
@@ -60,6 +65,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mCoordinatorLayout:CoordinatorLayout
     lateinit var navController:NavController
     lateinit var navView : BottomNavigationView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,9 +97,9 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         Log.i(TAG, " MainActivity on create success.")
-
+            //    ||destination.id== R.id.recipeDetailFragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.loginFragment ||destination.id== R.id.recipeDetailFragment) {
+            if(destination.id == R.id.loginFragment ) {
                 toolbar.visibility = View.GONE
                 navView.visibility = View.GONE
             } else {
@@ -102,22 +108,23 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-       // initBroadcaster()
-        val id :Int =intent.getIntExtra("one",0)
-
-        Log.i(TAG,"message : $id ")
-        if (id==1)naviagateToSelectedFragment()
-
-
-
+        updateUIAfterNotificationOnClicked()
     }
 
     private fun navigateToFriendsProfile(){
         navController.navigate(R.id.userProfileFragment)
 
     }
-    private fun naviagateToSelectedFragment(){
+    private fun navigateToSelectedFragment(){
+        Log.d(TAG, " Navigation to selection fragment")
         navController.navigate(R.id.selectionFragment)
+    }
+
+    private fun updateUIAfterNotificationOnClicked(){
+       // if (id==1)navigateToSelectedFragment()
+        val recipeId :String? = intent.getStringExtra("recipeId")
+        if (recipeId!=null)
+            selectionViewModel.setNewSelectedRecipeId(recipeId)
     }
 
 
