@@ -1,9 +1,12 @@
 package ch.enyo.openclassrooms.comeToEat.ui.selections
 
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import ch.enyo.openclassrooms.comeToEat.BR
@@ -58,6 +61,7 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
 
         holder.getRecipeOwner(selectedRecipe.participants[0])
 
+
        val imageView = holder.itemRowBinding.itemRecipeImageView
         selectedRecipe.image?.let { loadImage(imageView, it) }
 
@@ -67,7 +71,6 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
 
 
     private fun loadImage(v: ImageView, image:String){
-
         Glide.with(v.context)
             .load(image)
             .apply(RequestOptions())
@@ -78,8 +81,6 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
         selections=list
         notifyDataSetChanged()
     }
-
-
 
 
     class SelectionViewHolder(private val selectionFragment: SelectionFragment, binding: FragmentSelectionItemBinding) : RecyclerView.ViewHolder(binding.root),
@@ -106,13 +107,37 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
 
         }
 
+
         fun getRecipeOwner(userId:String){
+            Log.d(TAG, " userId  $userId")
 
             getUser(userId).addOnSuccessListener {
                     documentSnapshot ->  val user = documentSnapshot?.toObject(User::class.java)
-                itemRowBinding.itemRecipeHost.text=user!!.username
+
+               if (user != null) {
+                    Log.d(TAG, " username ${user.username}")
+                    itemRowBinding.itemRecipeHost.text= user.username
+                } else {
+                   itemRowBinding.itemRecipeHost.text="Unavailable"
+               }
+                /*if (user==null){
+                    itemRowBinding.itemRecipeHost.text= "Account closed"
+                    selectionFragment.context?.getColor(R.color.colorError)?.let {
+                        itemRowBinding.itemRecipeHost.setTextColor(
+                            it
+                        )
+                    }
+                }
+                else{
+                    itemRowBinding.itemRecipeHost.text= user.username
+                }*/
+
+
 
             }
+        }
+        private fun loadRecipeOwner(username:String){
+
         }
  
 

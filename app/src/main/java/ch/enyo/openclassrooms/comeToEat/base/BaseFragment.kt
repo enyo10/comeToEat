@@ -17,6 +17,7 @@ import ch.enyo.openclassrooms.comeToEat.auth.LoginViewModel
 import ch.enyo.openclassrooms.comeToEat.models.User
 import ch.enyo.openclassrooms.comeToEat.ui.friends.FriendsFragment
 import ch.enyo.openclassrooms.comeToEat.ui.profile.UserProfileFragment
+import ch.enyo.openclassrooms.comeToEat.ui.profile.UserProfileViewModel
 import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipeDetailFragment
 import ch.enyo.openclassrooms.comeToEat.ui.recipes.RecipesFragment
 import ch.enyo.openclassrooms.comeToEat.utils.getUser
@@ -34,7 +35,8 @@ import com.google.firebase.auth.FirebaseUser
         const val TAG :String ="BaseFragment"
     }
     val viewModel by activityViewModels<LoginViewModel>()
-     lateinit var authenticatedUser: User
+  //  val userProfileViewModel by activityViewModels<UserProfileViewModel>()
+  //  protected lateinit var authenticatedUser: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,7 +64,7 @@ import com.google.firebase.auth.FirebaseUser
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     Log.i(TAG,"Authentication success")
-                   getConnectedFromFireBase()
+                  // getConnectedFromFireBase()
 
 
                 }
@@ -90,18 +92,19 @@ import com.google.firebase.auth.FirebaseUser
         }
     }
 
-
+/*
     protected fun getConnectedFromFireBase(){
         onFailureListener()?.let {
             getUser(getCurrentUser()!!.uid).addOnFailureListener(it)
                 .addOnSuccessListener {
-                    documentSnapshot -> run { authenticatedUser = documentSnapshot!!.toObject(User::class.java) as User }
+                    documentSnapshot -> run { authenticatedUser = documentSnapshot!!.toObject(User::class.java) as User
+                userProfileViewModel.setAuthenticatedUser(authenticatedUser)}
 
                 Log.d(TAG, " Connected User $authenticatedUser")
             }
         }
 
-    }
+    }*/
 
 
 

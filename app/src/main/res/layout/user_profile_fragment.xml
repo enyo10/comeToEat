@@ -50,7 +50,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="30dp"
                     android:contentDescription="@string/user_profile_image"
-                    app:srcCompat="@drawable/ic_anon_user_48dp" />
+                    android:src="@drawable/ic_anon_user_48dp" />
 
                 <!-- PROFILE USERNAME -->
 
@@ -62,7 +62,6 @@
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/default_margin"
                     android:layout_marginBottom="30dp"
-                    android:text="@={userProfileViewModel.connectedUser.username}"
                     android:hint="@string/text_input_username"
                     android:textSize="@dimen/default_text_size"
                     />
@@ -71,7 +70,6 @@
                     android:id="@+id/profile_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{userProfileViewModel.connectedUser.username}"
                     android:hint="@string/user_name"
                     android:textSize="@dimen/default_text_size"
                     android:textStyle="bold" />
@@ -82,7 +80,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
-                    android:text="@string/text_view_email"
                     android:textSize="@dimen/default_text_size"
                     android:textStyle="bold" />
 
@@ -107,7 +104,8 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="40dp"
                         android:background="@drawable/button_radius_primary_color"
                         android:padding="@dimen/default_margin"
                         android:text="@string/button_update_account"
@@ -120,7 +118,9 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="30dp"
                         android:padding="@dimen/default_margin"
                         android:text="@string/button_sign_out_account"
                         android:textColor="#fff"
@@ -135,8 +135,10 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="40dp"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="30dp"
                         android:padding="@dimen/default_margin"
                         android:text="@string/button_delete_account"
                         android:textColor="#fff"

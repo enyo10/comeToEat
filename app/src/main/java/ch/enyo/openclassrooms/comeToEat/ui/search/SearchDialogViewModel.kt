@@ -7,28 +7,53 @@ import androidx.lifecycle.ViewModel
 class SearchDialogViewModel : ViewModel() {
 
 
-    val searchBasis: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+   private val searchBasis: MutableLiveData<String> = MutableLiveData()
+    fun getSearchBasis():MutableLiveData<String>{
+        return searchBasis
+    }
+    fun setSearchBasis(basis:String){
+        searchBasis.value=basis
     }
 
 
-    val maxIngredient: MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>()
+   private val maxIngredient: MutableLiveData<Int> = MutableLiveData<Int>()
+   fun getMaxIngredient():MutableLiveData<Int>{
+       return maxIngredient
+    }
+    fun setMaxIngredient(maxIng:Int){
+        maxIngredient.value=maxIng
     }
 
-    val cuisineType: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+   private val cuisineType: MutableLiveData<String> = MutableLiveData<String>()
+    fun getCuisineType():MutableLiveData<String>{
+        return cuisineType
     }
-    val mealType: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-
-    val dishType: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    fun setCuisineType(cuisine:String){
+        cuisineType.value=cuisine
     }
 
-    val excluded: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    private val  mealType: MutableLiveData<String> = MutableLiveData<String>()
+    fun getMealType(): MutableLiveData<String>{
+        return mealType
+    }
+    fun setMealType(meal:String){
+        mealType.value=meal
+    }
+
+    private val dishType: MutableLiveData<String> = MutableLiveData<String>()
+    fun getDishType():MutableLiveData<String>{
+        return dishType
+    }
+    fun setDishType(dish:String){
+        dishType.value=dish
+    }
+
+    private val excluded: MutableLiveData<String> =MutableLiveData<String>()
+    fun getExcluded():MutableLiveData<String>{
+        return excluded
+    }
+    fun setExcluded(exc:String){
+        excluded.value=exc
     }
 
 

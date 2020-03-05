@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -39,8 +38,7 @@ class LoginFragment : Fragment() {
 
     }
 
-    // Get a reference to the ViewModel scoped to this Fragment.
-  //  private val viewModel by viewModels<LoginViewModel>()
+    // Get a reference to the ViewModel scoped to activity scope.
     private val viewModel by activityViewModels<LoginViewModel>()
 
     private lateinit var navController: NavController
@@ -77,9 +75,12 @@ class LoginFragment : Fragment() {
                 // screens, we can utilize popBackStack(). If our login flow
                 // consisted of multiple screens, we would have to call
                 // popBackStack() multiple times.
-                LoginViewModel.AuthenticationState.AUTHENTICATED ->
+                LoginViewModel.AuthenticationState.AUTHENTICATED ->{
+                   // retrieveAuthenticatedUserFromFirebase()
+                    navController.navigate(R.id.recipesFragment)
+                }
                     //navController.popBackStack()
-                navController.navigate(R.id.recipesFragment)
+
                 else -> Log.e(TAG, "Authentication state that doesn't require any UI change $authenticationState"
                 )
             }
@@ -151,18 +152,18 @@ class LoginFragment : Fragment() {
             ).show()
         }
     }
-
+/*
     fun getUserId(): String? {
         return if (getCurrentUser() != null) getCurrentUser()!!.uid else null
-    }
+    }*/
 
     private fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
     }
 
-    private fun isCurrentUserLogged(): Boolean? {
+   /* private fun isCurrentUserLogged(): Boolean? {
         return getCurrentUser() != null
     }
-
+*/
 
 }

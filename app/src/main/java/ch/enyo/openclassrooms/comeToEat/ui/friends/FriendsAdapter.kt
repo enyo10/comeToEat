@@ -52,6 +52,7 @@ class FriendsAdapter(val fragment: FriendsFragment,var users:ArrayList<User>) :R
 
         Glide.with(v.context)
             .load(image)
+            .placeholder(R.drawable.ic_anon_user_48dp)
             .apply(RequestOptions().circleCrop())
             .into(v)
     }

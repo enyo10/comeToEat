@@ -22,8 +22,6 @@
             android:layout_margin="10dp"
             android:contentDescription="@string/friends_profile"
             android:src="@drawable/ic_anon_user_48dp"
-            
-
             />
 
         <RelativeLayout

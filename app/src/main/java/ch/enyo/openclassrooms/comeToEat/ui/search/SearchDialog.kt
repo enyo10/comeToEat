@@ -16,6 +16,7 @@ import ch.enyo.openclassrooms.comeToEat.databinding.SearchDialogFragmentBinding
 import ch.enyo.openclassrooms.comeToEat.ui.main.MainViewModel
 import ch.enyo.openclassrooms.comeToEat.utils.Converter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.common.base.Strings.isNullOrEmpty
 import kotlinx.android.synthetic.main.activity_main.*
 
 class SearchDialog : DialogFragment() {
@@ -25,72 +26,64 @@ class SearchDialog : DialogFragment() {
         private const val TAG :String="SearchDialog"
     }
 
-    private lateinit var searchViewModel: SearchDialogViewModel
+   // private lateinit var searchViewModel: SearchDialogViewModel
     private lateinit var binding:SearchDialogFragmentBinding
 
     private val mainViewModel: MainViewModel by activityViewModels()
-   // private val recipesViewModel: RecipesViewModel by activityViewModels()
+    private val searchDialogViewModel: SearchDialogViewModel by activityViewModels()
+    private val myQueryMap: MutableMap<String,String> = mutableMapOf()
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
        // return super.onCreateDialog(savedInstanceState)
         binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.search_dialog_fragment,container,false)
-        binding.lifecycleOwner=this
+        //binding.lifecycleOwner=this
 
         val materialBuilder = MaterialAlertDialogBuilder(requireContext())
         materialBuilder.setView(binding.root)
-
         return materialBuilder.create()
-
-
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        searchViewModel= ViewModelProvider(this).get(SearchDialogViewModel::class.java)
 
-
-        binding.viewModel=searchViewModel
+        binding.viewModel=searchDialogViewModel
         binding.converter= Converter()
 
         binding.actionSearch.setOnClickListener{
 
             var noErrors = true
+            val q :String? = searchDialogViewModel.getSearchBasis().value
+            val meal: String? = searchDialogViewModel.getMealType().value
+            val cuisineType: String? = searchDialogViewModel.getCuisineType().value
+            val dishType :String? =searchDialogViewModel.getDishType().value
+            val ing :Int? =searchDialogViewModel.getMaxIngredient().value
 
-            val q :String? = searchViewModel.searchBasis.value
-            val meal: String? = searchViewModel.mealType.value
-            val cuisineType: String? = searchViewModel.cuisineType.value
-            val dishType :String? =searchViewModel.dishType.value
-            val ing :Int? =searchViewModel.maxIngredient.value
+            if(q.isNullOrEmpty()){
+                binding.searchBasisTextLayout.error = "Must be set"
 
-            if(q!!.isEmpty()){
-               // binding.searchBasisTextLayout.error = "Must be set"
-                binding.searchBasisInputText.error=" Must be set"
                 noErrors = false
             }else{
-            //    binding.searchBasisTextLayout.error = null
-                binding.searchBasisInputText.error=null
+                binding.searchBasisTextLayout.error = null
 
+                myQueryMap["q"]=q
             }
 
             if(noErrors){
-                val myQueryMap: MutableMap<String,String> = mutableMapOf()
-                myQueryMap["q"]=q
 
-                if(meal!=null)myQueryMap["meal"] = meal
-                if(cuisineType!=null)myQueryMap["cuisineTyp"]= cuisineType
-                if(dishType!=null) myQueryMap["dishTyp"] = dishType
-                if(ing!=0)myQueryMap["ing"]=ing.toString()
+                if(meal!=null) myQueryMap["meal"] = meal
+                if(cuisineType!=null) myQueryMap["cuisineTyp"]= cuisineType
+                if(dishType!=null)  myQueryMap["dishTyp"] = dishType
+                if(ing!=0) myQueryMap["ing"] = ing.toString()
 
                 Log.d(TAG, " query map ...$myQueryMap")
-
                 mainViewModel.setRecipeQueryMap(myQueryMap)
-               // recipesViewModel.setRecipeQueryMap(myQueryMap)
+                dismiss()
 
             }
 
-
-            dismiss()
+           // dismiss()
         }
 
         binding.actionCancel.setOnClickListener{

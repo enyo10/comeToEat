@@ -7,17 +7,24 @@ import ch.enyo.openclassrooms.comeToEat.models.User
 
 
 class UserProfileViewModel : ViewModel() {
-    var username :MutableLiveData<String> = MutableLiveData()
 
-    val connectedUser: MutableLiveData<User> by lazy {
-        MutableLiveData<User>()
-    }
-
-    private  val authenticatedUser:MutableLiveData<User?> = MutableLiveData()
+   /* private  val authenticatedUser:MutableLiveData<User?> = MutableLiveData()
 
     fun setAuthenticatedUser(user: User){
         authenticatedUser.value=user
+    }
 
+    fun getAuthenticatedUser():MutableLiveData<User?>{
+        return authenticatedUser
+
+    }*/
+    private val username:MutableLiveData<String> = MutableLiveData()
+    fun getUsername(): MutableLiveData<String>{
+        return username
+    }
+
+    fun setUsername(name:String){
+        username.value=name
     }
 
 

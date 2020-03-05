@@ -46,7 +46,7 @@ class RecipesFragment : Fragment() {
 
 
     // Get a reference to the ViewModel scoped to this Fragment
-    private val viewModel by activityViewModels<LoginViewModel>()
+    private val loginViewModel by activityViewModels<LoginViewModel>()
     private val mainViewModel by activityViewModels<MainViewModel>()
 
      val recipesViewModel by activityViewModels<RecipesViewModel>()
@@ -61,27 +61,14 @@ class RecipesFragment : Fragment() {
         observeAuthenticationState()
         initRecyclerView()
         initRefreshLayout()
-
-
         binding.searchButton.setOnClickListener { initAndShowSearchDialog() }
-
-        selectionViewModel.getNewSelectedRecipeId()
-            .observe(viewLifecycleOwner, Observer { selectedRecipeId ->
-                if (selectedRecipeId != null) {
-                    setNewSelectedRecipe(selectedRecipeId)
-                }
-            })
-
-        mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
-                map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
-        })
 
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-       /* mainViewModel.getRecipeQueryMap().observe(this,Observer<MutableMap<String,String>>{
+        /*mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
             map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
         })*/
 
@@ -102,8 +89,6 @@ class RecipesFragment : Fragment() {
     private fun initRefreshLayout() {
         binding.recipesSwipeRefreshLayout.setOnRefreshListener {
 
-         /* if  (binding.recipesProgressBar.visibility==View.VISIBLE)
-                                binding.recipesProgressBar.visibility=View.GONE*/
             myStaticValue +=20
 
             val newFrom = myStaticValue
@@ -116,11 +101,6 @@ class RecipesFragment : Fragment() {
 
             Log.d(TAG, " map --- $mMap")
 
-           /* mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
-                    map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
-            })*/
-
-           // binding.recipesSwipeRefreshLayout.isRefreshing = false
         }
     }
 
@@ -162,7 +142,7 @@ class RecipesFragment : Fragment() {
      */
     private fun observeAuthenticationState() {
 
-        viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+        loginViewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     Log.i(TAG,"Authentication success")
@@ -198,13 +178,10 @@ class RecipesFragment : Fragment() {
     }
 
     private fun getConnectedFromFireBase(){
-
-       val viewModel= ViewModelProvider(this).get(UserProfileViewModel::class.java)
-
         getUser(getCurrentUser()!!.uid).addOnSuccessListener { document ->
             if (document != null) {
                 Log.d(TAG, "DocumentSnapshot usr data: ${document.data}")
-               viewModel.connectedUser.value= (document.toObject(User::class.java) as User)
+               loginViewModel.setAuthenticatedUser((document.toObject(User::class.java) as User))
             } else {
                 Log.d(TAG, "No such document")
             }
@@ -214,7 +191,7 @@ class RecipesFragment : Fragment() {
             }
     }
 
-    private fun setNewSelectedRecipe(selectedRecipeId:String){
+  /*  private fun setNewSelectedRecipe(selectedRecipeId:String){
         getSelectedRecipe(selectedRecipeId).addOnSuccessListener {
                 documentSnapshot ->  selectionViewModel.setSelectedSelectedRecipe( documentSnapshot!!.toObject(SelectedRecipe::class.java) as SelectedRecipe)
             selectionViewModel.getNewSelectedRecipeId().value = null
@@ -234,7 +211,7 @@ class RecipesFragment : Fragment() {
         Log.d(TAG, " authenticated user $user")
         (context as MainActivity).connectedUser=user
 
-    }
+    }*/
 
     private fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser

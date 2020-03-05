@@ -127,9 +127,6 @@ class MainActivity : AppCompatActivity() {
             selectionViewModel.setNewSelectedRecipeId(recipeId)
     }
 
-
-
-
     private fun restartActivity(){
         val intent = intent
         finish()

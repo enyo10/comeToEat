@@ -28,12 +28,6 @@ interface RecipeService {
     @GET("search")
     fun getRecipes(@QueryMap filters: MutableMap<String, String>): Observable<Result>
 
-/*
-    @GET("search?q=chicken&app_id=def9003a&app_key="+BuildConfig.api_key)
-    fun getRecipesResult():Observable<Result>*/
-
-
-
 
 
 }
