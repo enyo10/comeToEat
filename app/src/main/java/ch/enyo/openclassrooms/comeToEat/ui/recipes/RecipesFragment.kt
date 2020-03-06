@@ -68,9 +68,9 @@ class RecipesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        /*mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
+        mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
             map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
-        })*/
+        })
 
 
     }

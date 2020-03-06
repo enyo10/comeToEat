@@ -1,0 +1,15 @@
+[debug] [2020-03-06T00:05:06.775Z] ----------------------------------------------------------------------
+[debug] [2020-03-06T00:05:06.777Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\enyo1\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --only firestore
+[debug] [2020-03-06T00:05:06.777Z] CLI Version:   7.14.0
+[debug] [2020-03-06T00:05:06.777Z] Platform:      win32
+[debug] [2020-03-06T00:05:06.777Z] Node Version:  v12.14.1
+[debug] [2020-03-06T00:05:06.778Z] Time:          Fri Mar 06 2020 01:05:06 GMT+0100 (GMT+01:00)
+[debug] [2020-03-06T00:05:06.778Z] ----------------------------------------------------------------------
+[debug] [2020-03-06T00:05:06.778Z] 
+[debug] [2020-03-06T00:05:06.787Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-03-06T00:05:06.788Z] > authorizing via signed-in user
+[info] i  emulators: Starting emulators: 
+[warn] !  Not starting the firestore emulator, make sure you have run firebase init.
+[debug] [2020-03-06T00:05:08.868Z] [hub] writing locator at C:\Users\enyo1\AppData\Local\Temp\hub-cometoeat-5a561.json
+[info] +  hub: emulator hub started at http://localhost:4400
+[info] +  All emulators started, it is now safe to connect.

@@ -80,7 +80,6 @@ class SearchDialog : DialogFragment() {
                 Log.d(TAG, " query map ...$myQueryMap")
                 mainViewModel.setRecipeQueryMap(myQueryMap)
                 dismiss()
-
             }
 
            // dismiss()

@@ -1,5 +1,10 @@
 package ch.enyo.openclassrooms.comeToEat.utils
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.os.Build
+import androidx.annotation.RequiresApi
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.User
 import com.google.android.gms.tasks.Task
@@ -131,6 +136,16 @@ fun formatStringListToNewLine(list: List<String>):String{
     return value
 
 }
+
+@RequiresApi(Build.VERSION_CODES.M)
+  fun hasNetworkAvailable(context: Context?): Boolean {
+    val service = Context.CONNECTIVITY_SERVICE
+    val manager = context?.getSystemService(service) as ConnectivityManager?
+    val network = manager?.activeNetwork
+
+    return (network != null)
+}
+
 
 
 
