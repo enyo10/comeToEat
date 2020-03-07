@@ -120,25 +120,10 @@ class SelectionAdapter(var fragment: SelectionFragment,private var selections: L
                 } else {
                    itemRowBinding.itemRecipeHost.text="Unavailable"
                }
-                /*if (user==null){
-                    itemRowBinding.itemRecipeHost.text= "Account closed"
-                    selectionFragment.context?.getColor(R.color.colorError)?.let {
-                        itemRowBinding.itemRecipeHost.setTextColor(
-                            it
-                        )
-                    }
-                }
-                else{
-                    itemRowBinding.itemRecipeHost.text= user.username
-                }*/
-
-
 
             }
         }
-        private fun loadRecipeOwner(username:String){
 
-        }
  
 
 

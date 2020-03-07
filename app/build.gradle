@@ -88,6 +88,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     // glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.google.firebase:firebase-functions:19.0.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
 

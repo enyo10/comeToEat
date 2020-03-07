@@ -50,8 +50,4 @@ class MainViewModel: ViewModel() {
     }
 
 
-
-
-
-
 }

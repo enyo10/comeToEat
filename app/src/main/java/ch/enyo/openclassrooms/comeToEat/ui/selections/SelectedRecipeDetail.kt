@@ -85,7 +85,7 @@ class SelectedRecipeDetail : FriendsFragment() {
 
     private fun updateUIWithSelectedRecipe(selectedRecipe: SelectedRecipe){
         Log.d(TAG, "Selected Recipe $selectedRecipe")
-        mSelectedRecipe =selectedRecipe
+        mSelectedRecipe = selectedRecipe
 
         selectedRecipe.image?.let {
             loadImage( selectedRecipeDetailFragmentBinding.selectedRecipeImage,

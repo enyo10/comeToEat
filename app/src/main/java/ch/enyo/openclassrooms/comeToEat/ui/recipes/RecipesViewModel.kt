@@ -14,8 +14,6 @@ class RecipesViewModel : ViewModel() {
 
     private var recipes:MutableLiveData<ArrayList<Recipe>> = MutableLiveData()
 
-
-
     private var recipeRepository: RecipeRepository = RecipeRepository.getInstance()!!
 
     fun getRecipes():MutableLiveData<ArrayList<Recipe>>{

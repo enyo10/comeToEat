@@ -58,6 +58,7 @@ class ExampleInstrumentedTest {
             .awaitTerminalEvent(); // 3.3 - Await the stream terminated before continue
 
         // 4 - Get the recipes fetched
+        assertTrue(testObserver.values()[0].count>10)
         assertTrue(testObserver.values()[0].from==0)
         assertTrue(testObserver.values()[0].to ==10)
         assertTrue(testObserver.values()[0].q=="Fish")

@@ -56,15 +56,6 @@ class UserProfileFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-       /* val loginViewModel  by activityViewModels<LoginViewModel>()
-        loginViewModel.getAuthenticatedUser().observe(viewLifecycleOwner, Observer { user ->
-            if (user != null) {
-                updateUserData(user)
-            }
-        })*/
-       /* userProfileViewModel.getUsername()
-            .observe(viewLifecycleOwner, Observer { username -> updateUI(username) } )
-*/
         getConnectedFromFireBase()
         userProfileFragmentBinding.profileButtonDelete.setOnClickListener{
             showDeleteDialog()

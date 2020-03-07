@@ -13,3 +13,67 @@
 [debug] [2020-03-06T00:05:08.868Z] [hub] writing locator at C:\Users\enyo1\AppData\Local\Temp\hub-cometoeat-5a561.json
 [info] +  hub: emulator hub started at http://localhost:4400
 [info] +  All emulators started, it is now safe to connect.
+[debug] [2020-03-06T23:15:41.467Z] ----------------------------------------------------------------------
+[debug] [2020-03-06T23:15:41.470Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\enyo1\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2020-03-06T23:15:41.470Z] CLI Version:   7.14.0
+[debug] [2020-03-06T23:15:41.471Z] Platform:      win32
+[debug] [2020-03-06T23:15:41.471Z] Node Version:  v12.14.1
+[debug] [2020-03-06T23:15:41.472Z] Time:          Sat Mar 07 2020 00:15:41 GMT+0100 (GMT+01:00)
+[debug] [2020-03-06T23:15:41.472Z] ----------------------------------------------------------------------
+[debug] [2020-03-06T23:15:41.472Z] 
+[debug] [2020-03-06T23:15:41.489Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-03-06T23:15:41.491Z] > authorizing via signed-in user
+[info] i  emulators: Starting emulators: functions
+[warn] !  emulators: It seems that you are running multiple instances of the emulator suite for project cometoeat-5a561. This may result in unexpected behavior.
+[debug] [2020-03-06T23:15:43.586Z] [hub] writing locator at C:\Users\enyo1\AppData\Local\Temp\hub-cometoeat-5a561.json
+[info] +  hub: emulator hub started at http://localhost:4400
+[warn] !  Your requested "node" version "8" doesn't match your global version "12"
+[info] +  functions: functions emulator started at http://localhost:5001
+[info] i  functions: Watching "C:\dev\OpenclassRooms\parcours\devAndroid\projets\projet11\comeToEat\functions" for Cloud Functions...
+[debug] [2020-03-06T23:15:45.745Z] [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-03-06T23:15:45.746Z] [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-03-06T23:15:45.746Z] [worker-pool] submitWork(triggerId=)
+[debug] [2020-03-06T23:15:45.748Z] [worker-~diagnostic~-dcd11043-0be4-4206-bc6a-b6faa73ee332]: Assigning socketPath: \\?\pipe\C:\dev\OpenclassRooms\parcours\devAndroid\projets\projet11\comeToEat\functions\15244
+[debug] [2020-03-06T23:15:45.749Z] [worker-~diagnostic~-dcd11043-0be4-4206-bc6a-b6faa73ee332]: BUSY
+[debug] [2020-03-06T23:15:46.295Z] [runtime-status] [15244] Functions runtime initialized. {"cwd":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions","node_version":"12.14.1"}
+[debug] [2020-03-06T23:15:46.295Z] [runtime-status] [15244] Disabled runtime features: undefined
+[debug] [2020-03-06T23:15:46.309Z] [runtime-status] [15244] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.9.2","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2020-03-06T23:15:46.315Z] [runtime-status] [15244] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2020-03-06T23:15:47.118Z] [runtime-status] [15244] Found google-gax at C:\dev\OpenclassRooms\parcours\devAndroid\projets\projet11\comeToEat\functions\node_modules\google-gax\build\src\index.js
+[debug] [2020-03-06T23:15:47.118Z] [runtime-status] [15244] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"},{"name":"google-gax","status":"mocked"}]
+[debug] [2020-03-06T23:15:47.269Z] [runtime-status] [15244] Checked functions.config() {"config":{}}
+[debug] [2020-03-06T23:15:47.271Z] [runtime-status] [15244] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2020-03-06T23:15:47.276Z] [runtime-status] [15244] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.9.2","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2020-03-06T23:15:47.277Z] [runtime-status] [15244] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2020-03-06T23:15:47.531Z] [runtime-status] [15244] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.9.2","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-admin\\lib\\index.js"}}
+[debug] [2020-03-06T23:15:47.535Z] [runtime-status] [15244] config() parent accessed! {"parentKey":"firebase","parentConfig":{}}
+[debug] [2020-03-06T23:15:47.538Z] [runtime-status] [15244] initializeApp(DEFAULT) {"databaseURL":"https://cometoeat-5a561.firebaseio.com","storageBucket":"cometoeat-5a561.appspot.com","projectId":"cometoeat-5a561"}
+[debug] [2020-03-06T23:15:47.729Z] Unsupported trigger: {"regions":["europe-west1"],"eventTrigger":{"resource":"projects/_/buckets/cometoeat-5a561.appspot.com","eventType":"google.storage.object.finalize","service":"storage.googleapis.com"},"name":"myStorageFunction","entryPoint":"myStorageFunction"}
+[info] i  functions[myStorageFunction]: function ignored because the storage.googleapis.com emulator does not exist or is not running.
+[info] i  functions[insertRecipeReq]: function ignored because the firestore emulator does not exist or is not running.
+[info] +  All emulators started, it is now safe to connect.
+[debug] [2020-03-06T23:15:47.736Z] [worker-~diagnostic~-dcd11043-0be4-4206-bc6a-b6faa73ee332]: IDLE
+[debug] [2020-03-06T23:41:54.177Z] File C:\dev\OpenclassRooms\parcours\devAndroid\projets\projet11\comeToEat\functions\test\index.test.js changed, reloading triggers
+[debug] [2020-03-06T23:41:55.202Z] [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2020-03-06T23:41:55.203Z] [worker-~diagnostic~-dcd11043-0be4-4206-bc6a-b6faa73ee332]: FINISHING
+[debug] [2020-03-06T23:41:55.241Z] [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-03-06T23:41:55.242Z] [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2020-03-06T23:41:55.242Z] [worker-pool] submitWork(triggerId=)
+[debug] [2020-03-06T23:41:55.243Z] [worker-~diagnostic~-5fcabee7-578b-4654-83bc-4dbb1f5023e0]: Assigning socketPath: \\?\pipe\C:\dev\OpenclassRooms\parcours\devAndroid\projets\projet11\comeToEat\functions\14680
+[debug] [2020-03-06T23:41:55.244Z] [worker-~diagnostic~-5fcabee7-578b-4654-83bc-4dbb1f5023e0]: BUSY
+[debug] [2020-03-06T23:41:55.276Z] [worker-~diagnostic~-dcd11043-0be4-4206-bc6a-b6faa73ee332]: exited
+[debug] [2020-03-06T23:41:55.276Z] [worker-~diagnostic~-dcd11043-0be4-4206-bc6a-b6faa73ee332]: FINISHED
+[debug] [2020-03-06T23:41:56.046Z] [runtime-status] [14680] Functions runtime initialized. {"cwd":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions","node_version":"12.14.1"}
+[debug] [2020-03-06T23:41:56.048Z] [runtime-status] [14680] Disabled runtime features: undefined
+[debug] [2020-03-06T23:41:56.056Z] [runtime-status] [14680] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.9.2","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2020-03-06T23:41:56.061Z] [runtime-status] [14680] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2020-03-06T23:41:56.753Z] [runtime-status] [14680] Found google-gax at C:\dev\OpenclassRooms\parcours\devAndroid\projets\projet11\comeToEat\functions\node_modules\google-gax\build\src\index.js
+[debug] [2020-03-06T23:41:56.754Z] [runtime-status] [14680] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"},{"name":"google-gax","status":"mocked"}]
+[debug] [2020-03-06T23:41:56.865Z] [runtime-status] [14680] Checked functions.config() {"config":{}}
+[debug] [2020-03-06T23:41:56.866Z] [runtime-status] [14680] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2020-03-06T23:41:56.869Z] [runtime-status] [14680] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.9.2","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2020-03-06T23:41:56.871Z] [runtime-status] [14680] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2020-03-06T23:41:57.078Z] [runtime-status] [14680] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.9.2","resolution":"C:\\dev\\OpenclassRooms\\parcours\\devAndroid\\projets\\projet11\\comeToEat\\functions\\node_modules\\firebase-admin\\lib\\index.js"}}
+[debug] [2020-03-06T23:41:57.080Z] [runtime-status] [14680] config() parent accessed! {"parentKey":"firebase","parentConfig":{}}
+[debug] [2020-03-06T23:41:57.082Z] [runtime-status] [14680] initializeApp(DEFAULT) {"databaseURL":"https://cometoeat-5a561.firebaseio.com","storageBucket":"cometoeat-5a561.appspot.com","projectId":"cometoeat-5a561"}
+[debug] [2020-03-06T23:41:57.224Z] [worker-~diagnostic~-5fcabee7-578b-4654-83bc-4dbb1f5023e0]: IDLE

@@ -1,8 +1,5 @@
 package ch.enyo.openclassrooms.comeToEat.ui.main
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -13,23 +10,21 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-//import ch.enyo.openclassrooms.comeToEat.BuildConfig
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.Result
-import ch.enyo.openclassrooms.comeToEat.models.User
 import ch.enyo.openclassrooms.comeToEat.ui.selections.SelectionViewModel
+import ch.enyo.openclassrooms.comeToEat.utils.SelectedRecipe
+import ch.enyo.openclassrooms.comeToEat.utils.getSelectedRecipe
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.google.firebase.messaging.FirebaseMessaging
@@ -49,14 +44,11 @@ class MainActivity : AppCompatActivity() {
    /* private val FCMAPI = "https://fcm.googleapis.com/fcm/send"
     private val serverKey =
         "key=" + BuildConfig.SERVER_KEY*/
-    private val contentType = "application/json"
+  /*  private val contentType = "application/json"
     private val requestQueue: RequestQueue by lazy {
         Volley.newRequestQueue(this.applicationContext)
     }
-
-
-      var connectedUser: User?=null
-
+*/
     var recipes :ArrayList<Recipe> =ArrayList()
     lateinit var result: Result
 
@@ -121,10 +113,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUIAfterNotificationOnClicked(){
-       // if (id==1)navigateToSelectedFragment()
-        val recipeId :String? = intent.getStringExtra("recipeId")
-        if (recipeId!=null)
-            selectionViewModel.setNewSelectedRecipeId(recipeId)
+        val selectedRecipeId :String? = intent.getStringExtra("recipeId")
+        Log.d(TAG, " new selected recipe Id  $selectedRecipeId")
+        if (selectedRecipeId!=null){
+            getNewSelectedRecipe(selectedRecipeId)
+        }
+    }
+
+    private fun getNewSelectedRecipe(selectedRecipeId:String){
+        getSelectedRecipe(selectedRecipeId).addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot!=null){
+            selectionViewModel.setSelectedSelectedRecipe((documentSnapshot.toObject(SelectedRecipe::class.java))as SelectedRecipe)
+                navController.navigate(R.id.selectedRecipeDetail)
+        } else{
+                Log.d(TAG, " SelectedRecipe not found")
+            }
+        }
+
     }
 
     private fun restartActivity(){
@@ -211,16 +216,16 @@ class MainActivity : AppCompatActivity() {
     // UI
     // --------------------
     //  - Show Snack Bar with a message
-    private fun showSnackBar(
+   /* private fun showSnackBar(
         coordinatorLayout: CoordinatorLayout,
         message: String
     ) {
         Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show()
-    }
+    }*/
 
 
 
-   inner class MyReceiver : BroadcastReceiver() {
+  /* inner class MyReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
             navController.navigate(R.id.selectionFragment)
@@ -228,6 +233,6 @@ class MainActivity : AppCompatActivity() {
             // an Intent broadcast.
           //  throw UnsupportedOperationException("Not yet implemented")
         }
-    }
+    }*/
 
 }

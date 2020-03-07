@@ -5,28 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.auth.LoginViewModel
 import ch.enyo.openclassrooms.comeToEat.databinding.FragmentRecipesBinding
-import ch.enyo.openclassrooms.comeToEat.ui.main.MainActivity
 import ch.enyo.openclassrooms.comeToEat.ui.main.MainViewModel
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.User
-import ch.enyo.openclassrooms.comeToEat.ui.profile.UserProfileViewModel
 import ch.enyo.openclassrooms.comeToEat.ui.search.SearchDialog
-import ch.enyo.openclassrooms.comeToEat.ui.selections.SelectionViewModel
-import ch.enyo.openclassrooms.comeToEat.utils.SelectedRecipe
-import ch.enyo.openclassrooms.comeToEat.utils.getSelectedRecipe
 import ch.enyo.openclassrooms.comeToEat.utils.getUser
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import io.reactivex.disposables.Disposable
@@ -50,7 +42,6 @@ class RecipesFragment : Fragment() {
     private val mainViewModel by activityViewModels<MainViewModel>()
 
      val recipesViewModel by activityViewModels<RecipesViewModel>()
-    private val selectionViewModel by activityViewModels<SelectionViewModel>()
 
     private var myStaticValue =0
 
@@ -68,6 +59,7 @@ class RecipesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
             map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
         })

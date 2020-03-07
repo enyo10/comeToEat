@@ -20,7 +20,6 @@ import com.google.firebase.messaging.RemoteMessage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-
     companion object{
         private const val TAG: String= "MyFirebaseMessaging"
 
@@ -60,7 +59,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun showNotification(title: String?, body: String?,data :MutableMap<String,String>) {
-
 
         val intent = Intent(this,MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

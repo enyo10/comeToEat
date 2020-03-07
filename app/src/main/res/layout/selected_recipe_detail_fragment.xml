@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         tools:context=".ui.selections.SelectedRecipeDetail">
 
         <!--RECIPE IMAGE-->
@@ -118,7 +119,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
-            android:layout_width="410dp"
+            android:layout_width="match_parent"
             android:layout_height="382dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
