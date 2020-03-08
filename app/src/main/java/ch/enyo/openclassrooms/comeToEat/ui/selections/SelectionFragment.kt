@@ -63,6 +63,7 @@ class SelectionFragment : BaseFragment() {
 
     private fun updateUI(list:ArrayList<SelectedRecipe>){
         mSelectionAdapter.updateWithDate(list)
+        binding.selectedRecipesProgressBar.visibility=View.GONE
     }
 
     override fun initRecyclerView() {

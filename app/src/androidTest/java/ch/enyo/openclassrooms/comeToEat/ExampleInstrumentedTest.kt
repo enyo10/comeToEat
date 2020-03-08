@@ -55,7 +55,7 @@ class ExampleInstrumentedTest {
         observableResult.subscribeWith(testObserver)
             .assertNoErrors() // 3.1 - Check if no errors
             .assertNoTimeout() // 3.2 - Check if no Timeout
-            .awaitTerminalEvent(); // 3.3 - Await the stream terminated before continue
+            .awaitTerminalEvent() // 3.3 - Await the stream terminated before continue
 
         // 4 - Get the recipes fetched
         assertTrue(testObserver.values()[0].count>10)

@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.crashlytics.android.Crashlytics
 import com.google.firebase.messaging.FirebaseMessaging
 
 
@@ -202,37 +203,8 @@ class MainActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications")
     }
 
-
-
-
-    // ****************************** FIRE BASE *******************************************************
-
-// UTILS
-// ------------------------------------
-// Method that handles response after SignIn Activity close.
-
-
-    // --------------------
-    // UI
-    // --------------------
-    //  - Show Snack Bar with a message
-   /* private fun showSnackBar(
-        coordinatorLayout: CoordinatorLayout,
-        message: String
-    ) {
-        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show()
-    }*/
-
-
-
-  /* inner class MyReceiver : BroadcastReceiver() {
-
-        override fun onReceive(context: Context, intent: Intent) {
-            navController.navigate(R.id.selectionFragment)
-
-            // an Intent broadcast.
-          //  throw UnsupportedOperationException("Not yet implemented")
-        }
-    }*/
-
+    override fun onResume() {
+        super.onResume()
+       // Crashlytics.getInstance().crash();
+    }
 }

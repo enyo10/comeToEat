@@ -12,6 +12,12 @@
         android:layout_marginBottom="48dp"
         >
 
+        <ProgressBar
+            android:id="@+id/selected_recipes_progress_bar"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_large_margin"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/selection_recycler_view"

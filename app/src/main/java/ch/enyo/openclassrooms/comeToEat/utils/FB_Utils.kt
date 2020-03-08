@@ -2,7 +2,6 @@ package ch.enyo.openclassrooms.comeToEat.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
 import android.os.Build
 import androidx.annotation.RequiresApi
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
@@ -36,19 +35,10 @@ fun getUser(uid: String): Task<DocumentSnapshot?> {
         .get()
 }
 
-/* public static DatabaseReference getUserDateReference(String uid){
-        return UserHelper.getUsersCollection().g
-    }*/
-
-/* public static DatabaseReference getUserDateReference(String uid){
-        return UserHelper.getUsersCollection().g
-    }*/
 fun getAllUsers(): Task<QuerySnapshot> {
     return userCollection.get()
 
 }
-
-// --- UPDATE ---
 
 // --- UPDATE ---
 fun updateUsername(username: String, uid: String): Task<Void?> {
@@ -111,11 +101,7 @@ data class SelectedRecipe(
     val ingredients: List<String>? = null,
     val healthLabels:List<String>? = null,
     val participants: List<String>? = null
-)/*{
-    fun getOwnerId(): String? {
-        return participants?.get(0)
-    }
-}*/
+)
 
 
 fun formatString(list: List<String>):String{

@@ -36,8 +36,6 @@ class RecipesFragment : Fragment() {
     private  var mMap: MutableMap<String,String> = mutableMapOf()
     private var mRecipes: ArrayList<Recipe> = arrayListOf()
 
-
-    // Get a reference to the ViewModel scoped to this Fragment
     private val loginViewModel by activityViewModels<LoginViewModel>()
     private val mainViewModel by activityViewModels<MainViewModel>()
 
@@ -56,13 +54,16 @@ class RecipesFragment : Fragment() {
 
         return binding.root
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
+        super.onActivityCreated(savedInstanceState)
         mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
-            map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
+                map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
+
         })
+
+
+
 
 
     }
@@ -82,29 +83,21 @@ class RecipesFragment : Fragment() {
         binding.recipesSwipeRefreshLayout.setOnRefreshListener {
 
             myStaticValue +=20
-
             val newFrom = myStaticValue
             val  to = newFrom +20
-
             mMap["from"]= newFrom.toString()
             mMap["to"]= "$to"
-            Log.d(TAG ," map ++++ $mMap")
             mainViewModel.setRecipeQueryMap(mMap)
-
-            Log.d(TAG, " map --- $mMap")
 
         }
     }
 
 
     private fun updateQueryMapAndGetRecipes(map: MutableMap<String, String>){
-        binding.recipesProgressBar.visibility=View.VISIBLE
         this.mMap = map
 
         getRecipesAndUpdateUI(map)
 
-      if(binding.recipesProgressBar.visibility==View.VISIBLE)
-        binding.recipesProgressBar.visibility=View.INVISIBLE
     }
 
 
@@ -183,27 +176,6 @@ class RecipesFragment : Fragment() {
             }
     }
 
-  /*  private fun setNewSelectedRecipe(selectedRecipeId:String){
-        getSelectedRecipe(selectedRecipeId).addOnSuccessListener {
-                documentSnapshot ->  selectionViewModel.setSelectedSelectedRecipe( documentSnapshot!!.toObject(SelectedRecipe::class.java) as SelectedRecipe)
-            selectionViewModel.getNewSelectedRecipeId().value = null
-
-            findNavController().navigate(R.id.selectedRecipeDetail) }
-        }
-
-
-    private fun onFailureListener(): OnFailureListener? {
-        return OnFailureListener { e: Exception? ->
-            Toast.makeText(context,getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show()
-            e?.printStackTrace()
-        }
-    }
-
-    private fun setAuthenticatedUser(user: User){
-        Log.d(TAG, " authenticated user $user")
-        (context as MainActivity).connectedUser=user
-
-    }*/
 
     private fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
