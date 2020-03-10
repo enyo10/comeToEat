@@ -47,6 +47,13 @@ class SearchDialogViewModel : ViewModel() {
     fun setDishType(dish:String){
         dishType.value=dish
     }
+    private val dietType: MutableLiveData<String> = MutableLiveData()
+    fun getDietType(): MutableLiveData<String>{
+        return dietType
+    }
+    fun setDietType(diet: String){
+        dietType.value=diet
+    }
 
     private val excluded: MutableLiveData<String> =MutableLiveData<String>()
     fun getExcluded():MutableLiveData<String>{

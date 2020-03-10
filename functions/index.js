@@ -9,13 +9,13 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-exports.myStorageFunction = functions
+/*exports.myStorageFunction = functions
     .region('europe-west1')
     .storage
     .object()
     .onFinalize((object) => {
       // ...
-    });
+    });*/
 
 exports.insertRecipeReq = functions.firestore
     .document('recipes/{id}')

@@ -57,14 +57,9 @@ class RecipesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         super.onActivityCreated(savedInstanceState)
-        mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
+       /* mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
                 map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
-
-        })
-
-
-
-
+        })*/
 
     }
 
@@ -113,10 +108,11 @@ class RecipesFragment : Fragment() {
     private fun updateRecipes(list:ArrayList<Recipe>){
         Log.d(TAG, " update list: list size ${list.size}")
         binding.recipesSwipeRefreshLayout.isRefreshing=false
+        binding.recipesProgressBar.visibility=View.GONE
         this.mRecipes.clear()
         this.mRecipes.addAll(list)
         mRecipeAdapter.notifyDataSetChanged()
-        binding.recipesProgressBar.visibility=View.GONE
+
 
     }
 

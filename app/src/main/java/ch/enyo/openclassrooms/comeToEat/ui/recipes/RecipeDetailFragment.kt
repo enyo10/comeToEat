@@ -68,7 +68,13 @@ class RecipeDetailFragment : Fragment() {
        webView = recipeDetailBinding.webView
         webView.settings.setSupportZoom(true)
 
-        webView.webViewClient= WebViewClient()
+      //  webView.webViewClient= WebViewClient()
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                view?.loadUrl(url)
+                return true
+            }
+        }
 
 
         observeSelectedRecipe()

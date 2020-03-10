@@ -90,7 +90,7 @@ fun updateRecipeParticipantList(recipeId:String?,uid: String):Task<Void>{
 
 }
 
-data class SelectedRecipe(
+data class SelectedRecipe (
     val recipeId: String? = null,
     val recipeLabel: String? =null,
     val recipeUri : String? =null,
@@ -101,7 +101,12 @@ data class SelectedRecipe(
     val ingredients: List<String>? = null,
     val healthLabels:List<String>? = null,
     val participants: List<String>? = null
-)
+):Comparable<SelectedRecipe> {
+    override fun compareTo(other: SelectedRecipe): Int {
+        return this.date!!.compareTo(other.date)
+    }
+
+}
 
 
 fun formatString(list: List<String>):String{

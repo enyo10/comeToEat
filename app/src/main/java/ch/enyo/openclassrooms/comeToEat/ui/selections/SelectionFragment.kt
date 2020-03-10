@@ -16,6 +16,8 @@ import ch.enyo.openclassrooms.comeToEat.databinding.FragmentSelectionBinding
 import ch.enyo.openclassrooms.comeToEat.utils.getAllSelectedRecipe
 
 import ch.enyo.openclassrooms.comeToEat.utils.SelectedRecipe
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SelectionFragment : BaseFragment() {
 
@@ -62,6 +64,7 @@ class SelectionFragment : BaseFragment() {
     }
 
     private fun updateUI(list:ArrayList<SelectedRecipe>){
+        list.sort()
         mSelectionAdapter.updateWithDate(list)
         binding.selectedRecipesProgressBar.visibility=View.GONE
     }
