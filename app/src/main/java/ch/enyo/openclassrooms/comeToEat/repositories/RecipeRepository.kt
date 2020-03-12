@@ -36,7 +36,7 @@ class RecipeRepository {
 
                 Log.d(RecipesFragment.TAG, " Update UI method call ")
                 val recipes :ArrayList<Recipe> = ArrayList()
-                val count: Int=result.to - result.from-1
+                val count: Int=(result.to - result.from)-1
                 val index :Int =0
 
 

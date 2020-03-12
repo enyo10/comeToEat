@@ -1,10 +1,15 @@
 package ch.enyo.openclassrooms.comeToEat.ui.search
 
 
+import android.util.Log
+import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SearchDialogViewModel : ViewModel() {
+    companion object {
+        private const val TAG: String = "SearchDialogViewModel"
+    }
 
 
    private val searchBasis: MutableLiveData<String> = MutableLiveData()
@@ -16,51 +21,23 @@ class SearchDialogViewModel : ViewModel() {
     }
 
 
-   private val maxIngredient: MutableLiveData<Int> = MutableLiveData<Int>()
-   fun getMaxIngredient():MutableLiveData<Int>{
-       return maxIngredient
+    private val  healthLabel: MutableLiveData<String> = MutableLiveData<String>()
+    fun getHealthLabel(): MutableLiveData<String>{
+        Log.d(TAG, " health : ${healthLabel.value}")
+        return healthLabel
     }
-    fun setMaxIngredient(maxIng:Int){
-        maxIngredient.value=maxIng
-    }
-
-   private val cuisineType: MutableLiveData<String> = MutableLiveData<String>()
-    fun getCuisineType():MutableLiveData<String>{
-        return cuisineType
-    }
-    fun setCuisineType(cuisine:String){
-        cuisineType.value=cuisine
+    fun setHealthLabel(label:String){
+        healthLabel.value = label
     }
 
-    private val  mealType: MutableLiveData<String> = MutableLiveData<String>()
-    fun getMealType(): MutableLiveData<String>{
-        return mealType
-    }
-    fun setMealType(meal:String){
-        mealType.value=meal
-    }
 
-    private val dishType: MutableLiveData<String> = MutableLiveData<String>()
-    fun getDishType():MutableLiveData<String>{
-        return dishType
-    }
-    fun setDishType(dish:String){
-        dishType.value=dish
-    }
     private val dietType: MutableLiveData<String> = MutableLiveData()
     fun getDietType(): MutableLiveData<String>{
+        Log.d(TAG, " diet : $dietType.value")
         return dietType
     }
     fun setDietType(diet: String){
         dietType.value=diet
-    }
-
-    private val excluded: MutableLiveData<String> =MutableLiveData<String>()
-    fun getExcluded():MutableLiveData<String>{
-        return excluded
-    }
-    fun setExcluded(exc:String){
-        excluded.value=exc
     }
 
 

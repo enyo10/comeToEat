@@ -58,28 +58,36 @@
     <string name="search_dialog">Search dialog</string>
     <string name="selected_recipe_detail">selected recipe detail</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="participants">Participants</string>
     <string name="selected_recipe_health_label">Health label</string>
     <string name="rrecipe_detail">Recipe details</string>
     <string name="recipe_detail">Recipe details</string>
+    <string name="diet_type">Diet type : </string>
+    <string name="health_spinner_text">Health label :</string>
 
 
-    <string-array name="diet">
-        <item>Balanced</item>
-        <item>High-fiber</item>
-        <item>High-protein</item>
-        <item>Low-carb</item>
-        <item>Low-fat</item>
-        <item>Low-sodium</item>
+    <string-array name="diet_type">
+        <item>"--"</item>
+        <item>balanced</item>
+        <item>high-fiber</item>
+        <item>high-protein</item>
+        <item>how-carb</item>
+        <item>how-fat</item>
+        <item>how-sodium</item>
+    </string-array>
 
+    <string-array name="health">
+        <item>"--"</item>
+        <item>vegetarian</item>
     </string-array>
 
     <string-array name="meal_type">
-        <item>Breakfast</item>
-        <item>Dinner</item>
-        <item>Lunch</item>
+        <item>none</item>
+        <item>breakfast</item>
+        <item>dinner</item>
+        <item>lunch</item>
         <item>snack</item>
     </string-array>
 </resources>

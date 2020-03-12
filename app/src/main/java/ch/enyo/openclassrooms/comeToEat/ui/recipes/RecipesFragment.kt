@@ -57,17 +57,15 @@ class RecipesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         super.onActivityCreated(savedInstanceState)
-       /* mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
+        mainViewModel.getRecipeQueryMap().observe(viewLifecycleOwner,Observer<MutableMap<String,String>>{
                 map:MutableMap<String,String>  -> updateQueryMapAndGetRecipes(map)
-        })*/
+        })
 
     }
-
 
     private fun initRecyclerView(){
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-
         binding.recipesRecyclerView.layoutManager = linearLayoutManager
         mRecipeAdapter = RecipesAdapter(this,mRecipes )
         binding.recipesRecyclerView.adapter = mRecipeAdapter
@@ -95,7 +93,6 @@ class RecipesFragment : Fragment() {
 
     }
 
-
     private fun getRecipesAndUpdateUI(map: MutableMap<String, String>){
         recipesViewModel.getRecipes(map).observe(
             viewLifecycleOwner,
@@ -107,10 +104,11 @@ class RecipesFragment : Fragment() {
 
     private fun updateRecipes(list:ArrayList<Recipe>){
         Log.d(TAG, " update list: list size ${list.size}")
+        val sortedList = list.sortedWith(compareBy { it.label })
         binding.recipesSwipeRefreshLayout.isRefreshing=false
         binding.recipesProgressBar.visibility=View.GONE
         this.mRecipes.clear()
-        this.mRecipes.addAll(list)
+        this.mRecipes.addAll(sortedList)
         mRecipeAdapter.notifyDataSetChanged()
 
 
