@@ -60,26 +60,17 @@ class LoginFragment : Fragment() {
 
         navController = findNavController()
 
-        // If the user presses the back button, bring them back to the home screen
-       // requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-        //    navController.popBackStack(R.id.recipesFragment, false)
-      //  }
-
 
         // Observe the authentication state so we can know if the user has logged in successfully.
         // If the user has logged in successfully, bring them back to the settings screen.
         // If the user did not log in successfully, display an error message.
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
-                // Since our login flow is only one screen instead of multiple
-                // screens, we can utilize popBackStack(). If our login flow
-                // consisted of multiple screens, we would have to call
-                // popBackStack() multiple times.
+
                 LoginViewModel.AuthenticationState.AUTHENTICATED ->{
-                   // retrieveAuthenticatedUserFromFirebase()
+
                     navController.navigate(R.id.recipesFragment)
                 }
-                    //navController.popBackStack()
 
                 else -> Log.e(TAG, "Authentication state that doesn't require any UI change $authenticationState"
                 )
@@ -117,9 +108,7 @@ class LoginFragment : Fragment() {
                 Log.i(RecipesFragment.TAG, "Successfully signed in user ${FirebaseAuth.getInstance().currentUser?.displayName}!"
                 )
             } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
+
                 Log.i(RecipesFragment.TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
             }
         }
@@ -152,18 +141,11 @@ class LoginFragment : Fragment() {
             ).show()
         }
     }
-/*
-    fun getUserId(): String? {
-        return if (getCurrentUser() != null) getCurrentUser()!!.uid else null
-    }*/
+
 
     private fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
     }
 
-   /* private fun isCurrentUserLogged(): Boolean? {
-        return getCurrentUser() != null
-    }
-*/
 
 }

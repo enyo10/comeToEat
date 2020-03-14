@@ -29,23 +29,8 @@ class RecipeStream {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(15, TimeUnit.SECONDS)
-
-
         }
 
-
-
-        /*fun getSecond():Observable<Result>{
-            val recipeService: RecipeService =
-                RecipeService.retrofit.create(RecipeService::class.java)
-
-
-            return recipeService.getRecipesResult()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .timeout(15, TimeUnit.SECONDS)
-
-        }*/
     }
 
 

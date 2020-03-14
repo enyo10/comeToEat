@@ -3,15 +3,30 @@ package ch.enyo.openclassrooms.comeToEat.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
+import android.util.Log
+import android.view.View
+import android.widget.Adapter
+import android.widget.AdapterView
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatSpinner
+import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import ch.enyo.openclassrooms.comeToEat.models.Recipe
 import ch.enyo.openclassrooms.comeToEat.models.User
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 //-************************ USER *******************************************************33
+const val TAG= "utils"
 
 const val USER_COLLECTION="users"
 val userCollection:CollectionReference=FirebaseFirestore.getInstance().collection(USER_COLLECTION)
@@ -139,7 +154,86 @@ fun formatStringListToNewLine(list: List<String>):String{
 
 
 
+@BindingAdapter(value = ["pmtOpt", "pmtOptAttrChanged"], requireAll = false)
+fun setPmtOpt(
+    spinner: AppCompatSpinner,
+    selectedPmtOpt: String?,
+    changeListener: InverseBindingListener
+) {
+    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            adapterView: AdapterView<*>?,
+            view: View,
+            i: Int,
+            l: Long
+        ) {
+            changeListener.onChange()
+            Log.i("TAG", " value changed")
+        }
 
+        override fun onNothingSelected(adapterView: AdapterView<*>?) {
+            changeListener.onChange()
+        }
+    }
+    selectedPmtOpt?.let { getIndexOfItem(spinner, it) }?.let { spinner.setSelection(it) }
+}
+
+
+@InverseBindingAdapter(attribute = "pmtOpt", event = "pmtOptAttrChanged")
+fun getPmtOpt(spinner: AppCompatSpinner): String? {
+    return spinner.selectedItem as String
+
+}
+
+
+private fun getIndexOfItem(spinner: AppCompatSpinner, item: String): Int {
+    val a: Adapter? = spinner.adapter
+    if (a != null) for (i in 0 until a.count) {
+        if (a.getItem(i) == item) {
+            return i
+        }
+    }
+    return 0
+}
+
+
+@BindingAdapter("date")
+fun bindDate(view:TextView,date:Date){
+
+    view.text = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(date)
+}
+
+@BindingAdapter("label")
+fun bindLabel(view: TextView,list:List<String>){
+    view.text=
+        formatStringListToNewLine(
+            list
+        )
+}
+
+@BindingAdapter("image")
+ fun loadImage(v: ImageView, image:String){
+    Glide.with(v.context)
+        .load(image)
+        .apply(RequestOptions())
+        .into(v)
+}
+
+@BindingAdapter("username")
+fun getRecipeOwner(view: TextView, userId:String){
+
+    getUser(userId).addOnSuccessListener {
+            documentSnapshot ->  val user = documentSnapshot?.toObject(User::class.java)
+
+        if (user != null) {
+            view.text = user.username
+
+        } else {
+            Log.d(TAG, " username not found")
+        }
+
+    }
+}
 
 
 

@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ch.enyo.openclassrooms.comeToEat.R
 import ch.enyo.openclassrooms.comeToEat.base.BaseFragment
 import ch.enyo.openclassrooms.comeToEat.databinding.FragmentSelectionBinding
+import ch.enyo.openclassrooms.comeToEat.models.User
 import ch.enyo.openclassrooms.comeToEat.utils.getAllSelectedRecipe
 
 import ch.enyo.openclassrooms.comeToEat.utils.SelectedRecipe
+import ch.enyo.openclassrooms.comeToEat.utils.getUser
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,6 +28,7 @@ class SelectionFragment : BaseFragment() {
     }
     private lateinit var binding : FragmentSelectionBinding
     private lateinit var mSelectionAdapter: SelectionAdapter
+    private var selectedRecipeList :ArrayList<SelectedRecipe> = arrayListOf()
 
     val selectionViewModel by activityViewModels<SelectionViewModel>()
 
@@ -51,7 +54,23 @@ class SelectionFragment : BaseFragment() {
     override fun loadData() {
         getAllSelectedRecipe().addOnSuccessListener { result ->
             run {
-                updateUI(result.toObjects(SelectedRecipe::class.java) as ArrayList<SelectedRecipe>) }
+                val myList: ArrayList<SelectedRecipe> = arrayListOf()
+                val list = result.toObjects(SelectedRecipe::class.java) as ArrayList<SelectedRecipe>
+                for (i in 0 until  list.size){
+                    val selectedRecipe :SelectedRecipe = list[i]
+                    selectedRecipe.participants?.get(0)?.let {
+                        getUser(it).addOnSuccessListener {
+                            documentSnapshot ->  val user= documentSnapshot?.toObject(User::class.java)
+                            if (user!=null){
+                                myList.add(list[i])
+                                Log.i(TAG, " list size ${myList.size}")
+                                updateUI(myList)
+                            }
+
+                        } }
+                }
+
+            }
 
         }.addOnFailureListener { exception ->
             Log.d(TAG, "Error getting documents: ", exception)
@@ -64,17 +83,20 @@ class SelectionFragment : BaseFragment() {
     }
 
     private fun updateUI(list:ArrayList<SelectedRecipe>){
+
         list.sort()
         mSelectionAdapter.updateWithDate(list)
         binding.selectedRecipesProgressBar.visibility=View.GONE
     }
+
+
 
     override fun initRecyclerView() {
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.selectionRecyclerView.layoutManager=linearLayoutManager
 
-        mSelectionAdapter  = SelectionAdapter(this,ArrayList())
+        mSelectionAdapter  = SelectionAdapter(this,selectedRecipeList)
         binding.selectionRecyclerView.adapter=mSelectionAdapter
 
     }

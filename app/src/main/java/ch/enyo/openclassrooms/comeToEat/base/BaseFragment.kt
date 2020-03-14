@@ -34,9 +34,8 @@ import com.google.firebase.auth.FirebaseUser
     companion object{
         const val TAG :String ="BaseFragment"
     }
-    val viewModel by activityViewModels<LoginViewModel>()
-  //  val userProfileViewModel by activityViewModels<UserProfileViewModel>()
-  //  protected lateinit var authenticatedUser: User
+    private val viewModel by activityViewModels<LoginViewModel>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,12 +76,6 @@ import com.google.firebase.auth.FirebaseUser
         })
     }
 
-    private fun getCurrentUser(): FirebaseUser? {
-        return FirebaseAuth.getInstance().currentUser
-    }
-
-
-
     fun getSomeUser(userId:String){
 
         getUser(userId).addOnSuccessListener {
@@ -91,25 +84,6 @@ import com.google.firebase.auth.FirebaseUser
 
         }
     }
-
-/*
-    protected fun getConnectedFromFireBase(){
-        onFailureListener()?.let {
-            getUser(getCurrentUser()!!.uid).addOnFailureListener(it)
-                .addOnSuccessListener {
-                    documentSnapshot -> run { authenticatedUser = documentSnapshot!!.toObject(User::class.java) as User
-                userProfileViewModel.setAuthenticatedUser(authenticatedUser)}
-
-                Log.d(TAG, " Connected User $authenticatedUser")
-            }
-        }
-
-    }*/
-
-
-
-
-
 
     protected fun onFailureListener(): OnFailureListener? {
         return OnFailureListener { e: Exception? ->

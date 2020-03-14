@@ -41,15 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
     private val selectionViewModel by viewModels<SelectionViewModel>()
 
-
-   /* private val FCMAPI = "https://fcm.googleapis.com/fcm/send"
-    private val serverKey =
-        "key=" + BuildConfig.SERVER_KEY*/
-  /*  private val contentType = "application/json"
-    private val requestQueue: RequestQueue by lazy {
-        Volley.newRequestQueue(this.applicationContext)
-    }
-*/
     var recipes :ArrayList<Recipe> =ArrayList()
     lateinit var result: Result
 
@@ -107,10 +98,6 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToFriendsProfile(){
         navController.navigate(R.id.userProfileFragment)
 
-    }
-    private fun navigateToSelectedFragment(){
-        Log.d(TAG, " Navigation to selection fragment")
-        navController.navigate(R.id.selectionFragment)
     }
 
     private fun updateUIAfterNotificationOnClicked(){
@@ -203,8 +190,4 @@ class MainActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().unsubscribeFromTopic("pushNotifications")
     }
 
-    override fun onResume() {
-        super.onResume()
-       // Crashlytics.getInstance().crash();
-    }
 }

@@ -10,25 +10,6 @@ class MainViewModel: ViewModel() {
         private const val TAG: String ="MainViewModel"
     }
 
-
-   /* val searchBasis: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-
-
-    val maxIngredient: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-
-    val requestResult: MutableLiveData<Result> by lazy {
-        MutableLiveData<Result>()
-    }
-
-    val queryMap: MutableLiveData<MutableMap<String,String>> by lazy {
-        MutableLiveData<MutableMap<String,String>>()
-    }*/
-
-
     private var recipeQueryMap :MutableLiveData<MutableMap<String,String>> = MutableLiveData()
 
     fun setRecipeQueryMap(map: MutableMap<String,String>){

@@ -164,8 +164,6 @@ class UserProfileFragment : BaseFragment() {
         val builder = context?.let { AlertDialog.Builder(it) }
         builder!!.setTitle("WARNING")
         .setMessage(R.string.popup_message_confirmation_delete_account)
-        //builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
-
         .setPositiveButton(android.R.string.yes) { _, _ ->
             Toast.makeText(context, android.R.string.yes, Toast.LENGTH_SHORT).show()
 
@@ -186,7 +184,5 @@ class UserProfileFragment : BaseFragment() {
         return FirebaseAuth.getInstance().currentUser
     }
 
-    private fun isCurrentUserLogged(): Boolean{
-        return getCurrentUser() != null
-    }
+
 }

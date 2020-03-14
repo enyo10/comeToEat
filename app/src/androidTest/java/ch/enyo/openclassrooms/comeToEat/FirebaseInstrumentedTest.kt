@@ -1,7 +1,7 @@
 package ch.enyo.openclassrooms.comeToEat
 
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.enyo.openclassrooms.comeToEat.models.User
@@ -36,9 +36,9 @@ class FirebaseInstrumentedTest {
    // var firebaseUserDatabase: FirebaseUserDatabase? = null
     @Before
     fun setUp(){
-       MockitoAnnotations.initMocks(this);
+       MockitoAnnotations.initMocks(this)
 
-    }
+   }
 
 
 }
